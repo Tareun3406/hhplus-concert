@@ -35,16 +35,4 @@ class PaymentController {
             ConcertPaymentHistoryInfo(1, payRequest.userId, payRequest.reservationId, 100_000, 10_000, 90_000)
         )
     }
-
-    @GetMapping
-    fun getPaymentHistory(): Response<List<ConcertPaymentHistoryInfo>> {
-        return Response(
-            ResponseResultType.SUCCESS,
-            listOf(
-                ConcertPaymentHistoryInfo(1, 1, 1, 100_000, 10_000, 90_000),
-                ConcertPaymentHistoryInfo(2, 1, 2, 90_000, 50_000, 40_000),
-                ConcertPaymentHistoryInfo(3, 1, 3, 100_000, 10_000, 90_000)
-            )
-        )
-    }
 }

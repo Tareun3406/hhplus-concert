@@ -1,7 +1,7 @@
 package kr.tareun.concert.interfaces.reservation
 
 import kr.tareun.concert.domain.reservation.model.ReservationInfo
-import kr.tareun.concert.domain.concert.model.PaymentStatusType
+import kr.tareun.concert.domain.reservation.model.ReservationStatusType
 import kr.tareun.concert.interfaces.common.response.Response
 import kr.tareun.concert.interfaces.common.response.ResponseResultType
 import kr.tareun.concert.interfaces.reservation.model.ReserveRequest
@@ -16,7 +16,7 @@ class ReservationController {
     fun reserveConcertSchedule(@RequestBody request: ReserveRequest): Response<ReservationInfo> {
         return Response(
             ResponseResultType.SUCCESS,
-            ReservationInfo(1, request.reservationId, listOf(1, 2, 3), request.userId, LocalDateTime.now().plusMinutes(5), PaymentStatusType.PENDING)
+            ReservationInfo(1, request.reservationId, listOf(1, 2, 3), request.userId, LocalDateTime.now().plusMinutes(5), ReservationStatusType.PENDING)
         )
     }
 }

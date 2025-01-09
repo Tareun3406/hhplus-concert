@@ -32,6 +32,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mariadb")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 
 	//swagger
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")

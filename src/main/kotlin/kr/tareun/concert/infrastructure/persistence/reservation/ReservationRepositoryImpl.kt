@@ -18,4 +18,8 @@ class ReservationRepositoryImpl: ReservationRepository {
     override fun saveReserve(reservation: Reservation): Reservation {
         TODO("Not yet implemented")
     }
+
+    override fun getReservationByIdForUpdate(id: Long): Reservation {
+        TODO("Not yet implemented")
+    }
 }

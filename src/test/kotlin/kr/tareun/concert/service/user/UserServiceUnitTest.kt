@@ -1,4 +1,4 @@
-package kr.tareun.concert.user
+package kr.tareun.concert.service.user
 
 import kr.tareun.concert.application.user.UserService
 import kr.tareun.concert.domain.payment.PaymentRepository

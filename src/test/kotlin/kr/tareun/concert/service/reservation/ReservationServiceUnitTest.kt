@@ -1,4 +1,4 @@
-package kr.tareun.concert.reservation
+package kr.tareun.concert.service.reservation
 
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
@@ -34,10 +34,10 @@ class ReservationServiceUnitTest {
     @Test
     fun `좌석을 예약할 수 있다`() {
         // given
-        val seatList = listOf(1, 2)
+        val seatList = listOf(1L, 2L)
         val schedule = ConcertSchedule(1, 1, 100_000, LocalDateTime.now().plusDays(1), 1, "공연장 1", 50, 48)
         val reserveCommand = ReserveCommand(1, 1, seatList)
-        val reservation = Reservation.from(reserveCommand, schedule)
+        val reservation = reserveCommand.toReservation(schedule)
         `when`(concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)).thenReturn(schedule)
         `when`(reservationRepository.saveReserve(reservation)).thenReturn(reservation)
 

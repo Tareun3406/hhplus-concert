@@ -8,7 +8,7 @@ data class QueueToken(
     var userId: Long,
     var uuid: UUID = UUID.randomUUID(),
     var status: TokenStatusType = TokenStatusType.PENDING,
-    var expiresAt: LocalDateTime? = null,
+    var expiredTime: LocalDateTime? = null,
 ) {
     fun markedAsExpired() {
         status = TokenStatusType.EXPIRED
@@ -16,7 +16,7 @@ data class QueueToken(
     fun markedAsActivated() {
         status = TokenStatusType.ACTIVATED
     }
-    fun setExpiredTime(time: LocalDateTime) {
-        expiresAt = time
+    fun updateExpiredTime(time: LocalDateTime) {
+        expiredTime = time
     }
 }

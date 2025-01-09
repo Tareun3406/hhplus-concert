@@ -1,4 +1,4 @@
-package kr.tareun.concert.queue
+package kr.tareun.concert.service.queue
 
 import kr.tareun.concert.application.queue.QueueService
 import kr.tareun.concert.domain.queue.QueueRepository

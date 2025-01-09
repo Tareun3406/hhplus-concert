@@ -16,10 +16,10 @@ class ReservationService(
     @Transactional
     fun reserveConcert(reserveCommand: ReserveCommand): ReservationResult {
         val schedule = concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)
-        schedule.addReservedCount(reserveCommand.seats.size)
+        schedule.addReservedCount(reserveCommand.seatIdList.size)
         concertRepository.saveConcertSchedule(schedule)
 
-        val newReservation = Reservation.from(reserveCommand, schedule)
+        val newReservation = reserveCommand.toReservation(schedule)
         return ReservationResult.from(reservationRepository.saveReserve(newReservation))
     }
 }

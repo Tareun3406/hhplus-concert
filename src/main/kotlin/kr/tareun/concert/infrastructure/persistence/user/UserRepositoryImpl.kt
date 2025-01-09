@@ -5,8 +5,10 @@ import kr.tareun.concert.domain.user.model.User
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl(
+    private val jpaRepository: UserJpaRepository
+): UserRepository {
     override fun getUserByUserId(userId: Long): User {
-        TODO("Not yet implemented")
+        return jpaRepository.getReferenceById(userId).toUser()
     }
 }

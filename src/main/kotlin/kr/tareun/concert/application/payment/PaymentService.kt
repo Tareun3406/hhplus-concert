@@ -10,6 +10,7 @@ import kr.tareun.concert.domain.reservation.ReservationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+@Transactional(readOnly = true)
 @Service
 class PaymentService(
     val paymentRepository: PaymentRepository,

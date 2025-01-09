@@ -6,7 +6,7 @@ data class ReservationResponse(
     val reservationId: Long,
     val userId: Long,
     val scheduleId: Long,
-    val seatNumbers: List<Int>,
+    val seatIds: List<Long>,
 ) {
     companion object {
         fun from(reservationResult: ReservationResult): ReservationResponse {
@@ -14,7 +14,7 @@ data class ReservationResponse(
                 reservationId = reservationResult.reservationId,
                 userId = reservationResult.userId,
                 scheduleId = reservationResult.scheduleId,
-                seatNumbers = reservationResult.seats,
+                seatIds = reservationResult.seatIds,
             )
         }
     }

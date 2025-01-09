@@ -1,4 +1,4 @@
-package kr.tareun.concert.payment
+package kr.tareun.concert.service.payment
 
 import kr.tareun.concert.application.payment.PaymentService
 import kr.tareun.concert.application.payment.model.ChargeCommand

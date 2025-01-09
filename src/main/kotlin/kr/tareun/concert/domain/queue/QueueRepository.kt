@@ -12,6 +12,6 @@ interface QueueRepository {
     fun countQueueByIdLessThanAndStatus(id: Long, status: TokenStatusType): Long
 
     fun getAllByStatusAndExpiredTimeLessThan(status: TokenStatusType, time: LocalDateTime): List<QueueToken>
-    fun countByStatus(status: TokenStatusType): Int
+    fun countByStatus(status: TokenStatusType): Long
     fun getAllByStatusOrderByIdAscWithLimit(status: TokenStatusType, limit: Int): List<QueueToken>
 }

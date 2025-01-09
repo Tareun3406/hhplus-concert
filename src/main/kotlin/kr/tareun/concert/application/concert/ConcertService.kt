@@ -7,7 +7,9 @@ import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.ReservationStatusType
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional(readOnly = true)
 @Service
 class ConcertService(
     private val concertRepository: ConcertRepository,

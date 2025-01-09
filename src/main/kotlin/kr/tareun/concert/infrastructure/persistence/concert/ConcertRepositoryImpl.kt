@@ -12,6 +12,10 @@ class ConcertRepositoryImpl: ConcertRepository {
         TODO("Not yet implemented")
     }
 
+    override fun saveConcertSchedule(schedule: ConcertSchedule): ConcertSchedule {
+        TODO("Not yet implemented")
+    }
+
     override fun getConcertScheduleListByConcertId(concertId: Long): List<ConcertSchedule> {
         TODO("Not yet implemented")
     }

@@ -1,10 +1,9 @@
 package kr.tareun.concert.interfaces.queue
 
-import kr.tareun.concert.domain.queue.model.QueueTokenInfo
 import kr.tareun.concert.interfaces.common.response.Response
 import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.interfaces.queue.model.QueueResponse
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -16,10 +15,18 @@ import java.util.*
 class QueueController {
 
     @PostMapping
-    fun getUserQueue(@RequestParam userId: Long): Response<QueueTokenInfo> {
+    fun createQueueToken(@RequestParam userId: Long): Response<QueueResponse> {
         return Response(
             ResponseResultType.SUCCESS,
-            QueueTokenInfo(UUID.randomUUID(), userId, 100)
+            QueueResponse(UUID.randomUUID(), userId, 100)
+        )
+    }
+
+    @GetMapping
+    fun getQueueToken(@RequestParam uuid: UUID): Response<QueueResponse> {
+        return Response(
+            ResponseResultType.SUCCESS,
+            QueueResponse(UUID.randomUUID(), 1, 100)
         )
     }
 }

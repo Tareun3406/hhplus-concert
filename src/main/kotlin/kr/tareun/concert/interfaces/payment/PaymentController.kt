@@ -1,5 +1,8 @@
 package kr.tareun.concert.interfaces.payment
 
+import kr.tareun.concert.application.payment.PaymentService
+import kr.tareun.concert.application.payment.model.ChargeCommand
+import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.interfaces.common.response.Response
 import kr.tareun.concert.interfaces.common.response.ResponseResultType
 import kr.tareun.concert.interfaces.payment.model.ChargeRequest
@@ -11,34 +14,41 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/payments")
-class PaymentController {
+class PaymentController(
+    val paymentService: PaymentService,
+) {
 
     @GetMapping("/points")
     fun getBalance(@RequestParam userId: Long): Response<PointResponse> {
         return Response(
             ResponseResultType.SUCCESS,
-            PointResponse(userId, 100_000)
+            PointResponse.from(paymentService.retrievePoint(userId))
+//            PointResponse(userId, 100_000)
         )
     }
 
     @PostMapping("/charge")
     fun chargeBalance(@RequestBody chargeRequest: ChargeRequest): Response<PointResponse> {
+        val command = ChargeCommand.from(chargeRequest)
         return Response(
             ResponseResultType.SUCCESS,
-            PointResponse(chargeRequest.userId, 100_000)
+            PointResponse.from(paymentService.chargePoint(command))
+//            PointResponse(chargeRequest.userId, 100_000)
         )
     }
 
     @PostMapping
     fun payReservedConcert(@RequestBody payRequest: PayRequest): Response<PaymentHistoryResponse> {
+        val command = PayCommand.from(payRequest)
         return Response(
             ResponseResultType.SUCCESS,
-            PaymentHistoryResponse(
-                historyId = 1,
-                userId = payRequest.userId,
-                paidAmount = 100_000,
-                reservationId = payRequest.reservationId,
-            )
+            PaymentHistoryResponse.from(paymentService.payReservation(command))
+//            PaymentHistoryResponse(
+//                historyId = 1,
+//                userId = payRequest.userId,
+//                paidAmount = 100_000,
+//                reservationId = payRequest.reservationId,
+//            )
         )
     }
 }

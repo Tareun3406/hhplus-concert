@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.anyList
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -31,7 +32,6 @@ class QueueSchedulerUnitTest {
 
     @Test
     fun `주기적으로 토큰을 활성화 하고 만료시킬 수 있다`() {
-
         //given
         val expiredTokens = listOf(QueueToken(1, 1, UUID.randomUUID()))
         val pendingTokens = listOf(QueueToken(1, 1, UUID.randomUUID()))
@@ -43,6 +43,6 @@ class QueueSchedulerUnitTest {
         val result = queueTokenScheduler.scheduleActivateToken()
 
         // then
-        Mockito.verify(queueRepository, Mockito.times(5))
+        Mockito.verify(queueRepository, Mockito.times(2)).saveAllQueueTokens(anyList())
     }
 }

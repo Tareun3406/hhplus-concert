@@ -7,4 +7,5 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "app.concert")
 class ConcertProperties {
     val concertListPageSize = 10
+    val expiredMinute = 5L
 }

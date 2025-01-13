@@ -25,6 +25,7 @@ CREATE TABLE reservation_item
     concert_schedule_id BIGINT                NOT NULL,
     seat_id             BIGINT                NOT NULL,
     reservation_status  VARCHAR(255)          NOT NULL,
+    expired_at          TIMESTAMP             NOT NULL,
     CONSTRAINT pk_reservation_item PRIMARY KEY (id)
 );
 
@@ -98,6 +99,6 @@ insert into concert_schedule value (1, 1, 1000, TIMESTAMP('20990201'), 1, 1);
 insert into location value (1, '장소 1', 4);
 insert into seat values (1, 1, 1),(2, 1, 2),(3, 1, 3),(4, 1, 4);
 insert into reservation value (1, 1, 1);
-insert into reservation_item value (1, 1, 1, 1, 'PENDING');
+insert into reservation_item value (1, 1, 1, 1, 'NON_PAID', NOW());
 
 insert into queue_token value (1, 1, '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', 'PENDING', null);

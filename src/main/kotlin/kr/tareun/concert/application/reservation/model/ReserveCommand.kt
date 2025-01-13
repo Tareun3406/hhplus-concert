@@ -25,7 +25,7 @@ data class ReserveCommand(
             concertScheduleId = concertScheduleId,
             seatIds = seatIdList,
             priceAmount = scheduleInfo.ticketPrice * seatIdList.size,
-            reservationStatus = ReservationStatusType.PENDING
+            reservationStatus = ReservationStatusType.NON_PAID
         )
     }
 }

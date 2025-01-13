@@ -4,6 +4,8 @@ import jakarta.persistence.*
 import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
 import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import org.hibernate.annotations.CreationTimestamp
+import java.time.LocalDateTime
 
 @Table(name = "reservation_item")
 @Entity
@@ -23,16 +25,23 @@ class ReservationItemEntity(
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    var reservationStatus : ReservationStatusType = ReservationStatusType.PENDING,
+    var reservationStatus : ReservationStatusType = ReservationStatusType.NON_PAID,
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    var expiredAt : LocalDateTime
 ) {
     companion object {
-        fun createNewReservationItem(reservation: Reservation, seatId: Long): ReservationItemEntity {
-            return ReservationItemEntity(
-                reservationId = reservation.reservationId,
-                concertScheduleId = reservation.concertScheduleId,
-                seatId = seatId,
-                reservationStatus = reservation.reservationStatus
-            )
+        fun createNewReservationItems(reservation: Reservation, expiredAt: LocalDateTime): List<ReservationItemEntity> {
+            return reservation.seatIds.map {
+                ReservationItemEntity(
+                    reservationId = reservation.reservationId,
+                    concertScheduleId = reservation.concertScheduleId,
+                    seatId = it,
+                    reservationStatus = reservation.reservationStatus,
+                    expiredAt = expiredAt
+                )
+            }
         }
     }
 

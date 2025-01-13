@@ -84,11 +84,11 @@ class ConcertServiceUnitTest {
         for (i in 1..50) { seats.add(ConcertSeat(i.toLong(), schedule.locationId, i)) }
 
         val reservationItems = mutableListOf<ReservationItem>()
-        for (i in 1..10) { reservationItems.add(ReservationItem(i.toLong(), i.toLong(), scheduleId, i.toLong(), ReservationStatusType.CONFIRMED)) }
+        for (i in 1..10) { reservationItems.add(ReservationItem(i.toLong(), i.toLong(), scheduleId, i.toLong(), ReservationStatusType.PAID)) }
 
         `when`(concertRepository.getScheduleByScheduleId(scheduleId)).thenReturn(schedule)
         `when`(concertRepository.getConcertSeatListByLocationId(schedule.locationId)).thenReturn(seats)
-        `when`(reservationRepository.getReservationItemListByScheduleIdAndReservationStatusNot(schedule.scheduleId, ReservationStatusType.EXPIRED)).thenReturn(reservationItems)
+        `when`(reservationRepository.getAllValidReservationItem(schedule.scheduleId)).thenReturn(reservationItems)
 
 
         // when

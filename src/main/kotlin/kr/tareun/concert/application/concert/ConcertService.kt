@@ -5,7 +5,6 @@ import kr.tareun.concert.application.concert.model.ConcertScheduleResult
 import kr.tareun.concert.application.concert.model.ConcertSeatResult
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -26,7 +25,7 @@ class ConcertService(
     fun retrieveConcertSeatList(scheduleId: Long): List<ConcertSeatResult> {
         val schedule = concertRepository.getScheduleByScheduleId(scheduleId)
         val seatList = concertRepository.getConcertSeatListByLocationId(schedule.locationId)
-        val seatReservationMap = reservationRepository.getReservationItemListByScheduleIdAndReservationStatusNot(scheduleId, ReservationStatusType.EXPIRED)
+        val seatReservationMap = reservationRepository.getAllValidReservationItem(scheduleId)
             .associateBy { it.seatId }
 
         return seatList.map { ConcertSeatResult.from(it, seatReservationMap[it.seatId]) }

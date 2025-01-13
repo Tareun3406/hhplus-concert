@@ -4,20 +4,21 @@ import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
 import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.infrastructure.config.ConcertProperties
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationEntity
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationItemEntity
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class ReservationRepositoryImpl (
     private val reservationJpaRepository: ReservationJpaRepository,
-    private val reservationItemJpaRepository: ReservationItemJpaRepository
+    private val reservationItemJpaRepository: ReservationItemJpaRepository,
+
+    private val concertProperties: ConcertProperties
 ): ReservationRepository {
-    override fun getReservationItemListByScheduleIdAndReservationStatusNot(
-        scheduleId: Long,
-        status: ReservationStatusType
-    ): List<ReservationItem> {
-        val itemList = reservationItemJpaRepository.getReservationItemListByConcertScheduleIdAndReservationStatusNot(scheduleId, status)
+    override fun getAllValidReservationItem(scheduleId: Long, ): List<ReservationItem> {
+        val itemList = reservationItemJpaRepository.findAllByScheduleIdAndStatusOrExpiredAt(scheduleId, ReservationStatusType.PAID, LocalDateTime.now())
         return itemList.map { it.toReservationItem() }
     }
 
@@ -27,7 +28,7 @@ class ReservationRepositoryImpl (
 
         val items: List<ReservationItemEntity>
         if (reservation.reservationId == 0L) {
-            items = reservation.seatIds.map { ReservationItemEntity.createNewReservationItem(reservation ,it) }
+            items = ReservationItemEntity.createNewReservationItems(reservation, LocalDateTime.now().plusMinutes(concertProperties.expiredMinute))
         } else {
             items = reservationItemJpaRepository.findAllByReservationId(reservation.reservationId);
             items.forEach{ it.reservationStatus = reservation.reservationStatus }

@@ -71,7 +71,7 @@ class PaymentServiceUnitTest {
         val basePoint = 100_000
         val reservationId = 1L
         val point = Point(1, userId, basePoint)
-        val reservation = Reservation(reservationId, userId, 1, listOf(1), 10_000, ReservationStatusType.PENDING)
+        val reservation = Reservation(reservationId, userId, 1, listOf(1), 10_000, ReservationStatusType.NON_PAID)
         val paymentHistory = PaymentHistory(1, userId, reservationId, reservation.priceAmount)
 
         val payRequest = PayCommand(userId, reservationId)

@@ -26,6 +26,6 @@ data class Reservation(
     }
 
     fun markedAsPaid() {
-        this.reservationStatus = ReservationStatusType.CONFIRMED
+        this.reservationStatus = ReservationStatusType.PAID
     }
 }

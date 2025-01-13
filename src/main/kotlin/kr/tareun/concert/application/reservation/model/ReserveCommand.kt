@@ -23,7 +23,7 @@ data class ReserveCommand(
         return Reservation(
             userId = userId,
             concertScheduleId = concertScheduleId,
-            seatIdList = seatIdList,
+            seatIds = seatIdList,
             priceAmount = scheduleInfo.ticketPrice * seatIdList.size,
             reservationStatus = ReservationStatusType.PENDING
         )

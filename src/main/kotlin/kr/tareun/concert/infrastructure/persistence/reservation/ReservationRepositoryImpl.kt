@@ -21,12 +21,16 @@ class ReservationRepositoryImpl (
         return itemList.map { it.toReservationItem() }
     }
 
-    override fun saveReserve(reservation: Reservation): Reservation {
-        val reservationEntity = ReservationEntity(userId = reservation.userId, priceAmount = reservation.priceAmount)
+    override fun saveReservation(reservation: Reservation): Reservation {
+        val reservationEntity = ReservationEntity.from(reservation)
         val reservationResult = reservationJpaRepository.save(reservationEntity)
 
-        val items = reservation.seatIdList.map {
-            ReservationItemEntity(reservationId = reservation.reservationId, concertScheduleId = reservation.concertScheduleId, seatId = it, reservationStatus = reservation.reservationStatus)
+        val items: List<ReservationItemEntity>
+        if (reservation.reservationId == 0L) {
+            items = reservation.seatIds.map { ReservationItemEntity.createNewReservationItem(reservation ,it) }
+        } else {
+            items = reservationItemJpaRepository.findAllByReservationId(reservation.reservationId);
+            items.forEach{ it.reservationStatus = reservation.reservationStatus }
         }
         val itemsResult = reservationItemJpaRepository.saveAll(items)
 

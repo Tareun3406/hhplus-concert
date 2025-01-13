@@ -1,6 +1,7 @@
 package kr.tareun.concert.infrastructure.persistence.reservation.entity
 
 import jakarta.persistence.*
+import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
 import kr.tareun.concert.domain.reservation.model.ReservationStatusType
 
@@ -24,6 +25,17 @@ class ReservationItemEntity(
     @Enumerated(EnumType.STRING)
     var reservationStatus : ReservationStatusType = ReservationStatusType.PENDING,
 ) {
+    companion object {
+        fun createNewReservationItem(reservation: Reservation, seatId: Long): ReservationItemEntity {
+            return ReservationItemEntity(
+                reservationId = reservation.reservationId,
+                concertScheduleId = reservation.concertScheduleId,
+                seatId = seatId,
+                reservationStatus = reservation.reservationStatus
+            )
+        }
+    }
+
     fun toReservationItem(): ReservationItem {
         return ReservationItem(
             itemId = id,

@@ -5,7 +5,6 @@ import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.reservation.ReservationRepository
-import kr.tareun.concert.domain.reservation.model.Reservation
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -39,7 +38,7 @@ class ReservationServiceUnitTest {
         val reserveCommand = ReserveCommand(1, 1, seatList)
         val reservation = reserveCommand.toReservation(schedule)
         `when`(concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)).thenReturn(schedule)
-        `when`(reservationRepository.saveReserve(reservation)).thenReturn(reservation)
+        `when`(reservationRepository.saveReservation(reservation)).thenReturn(reservation)
 
         // when
         val result = reservationService.reserveConcert(reserveCommand)

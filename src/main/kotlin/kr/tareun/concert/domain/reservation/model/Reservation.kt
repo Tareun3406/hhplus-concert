@@ -7,7 +7,7 @@ data class Reservation(
     var reservationId: Long = 0,
     var userId: Long,
     var concertScheduleId: Long,
-    var seatIdList: List<Long>,
+    var seatIds: List<Long>,
     var priceAmount: Int,
     var reservationStatus: ReservationStatusType,
 ) {
@@ -18,10 +18,14 @@ data class Reservation(
                 reservationId = reservationEntity.id,
                 userId = reservationEntity.userId,
                 concertScheduleId = itemRef.concertScheduleId,
-                seatIdList = reservationItemEntityList.map { it.seatId },
+                seatIds = reservationItemEntityList.map { it.seatId },
                 priceAmount = reservationEntity.priceAmount,
                 reservationStatus = itemRef.reservationStatus
             )
         }
+    }
+
+    fun markedAsPaid() {
+        this.reservationStatus = ReservationStatusType.CONFIRMED
     }
 }

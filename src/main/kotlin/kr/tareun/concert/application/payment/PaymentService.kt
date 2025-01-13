@@ -38,6 +38,10 @@ class PaymentService(
             paidPoint = reservation.priceAmount
         )
         paymentRepository.savePoint(point)
+
+        reservation.markedAsPaid()
+        reservationRepository.saveReservation(reservation)
+
         return PaymentHistoryResult.from(paymentRepository.savePaymentHistory(paymentHistory))
     }
 }

@@ -16,13 +16,23 @@ class ReservationEntity(
     @Column(nullable = false)
     var priceAmount: Int,
 ) {
+    companion object {
+        fun from(reservation: Reservation): ReservationEntity {
+            return ReservationEntity(
+                id = reservation.reservationId,
+                userId = reservation.userId,
+                priceAmount = reservation.priceAmount
+            )
+        }
+    }
+
     fun toReservation(reservationItemEntityList: List<ReservationItemEntity>): Reservation {
         val itemRef = reservationItemEntityList[0]
         return Reservation(
             reservationId = id,
             userId = userId,
             concertScheduleId = itemRef.concertScheduleId,
-            seatIdList = reservationItemEntityList.map { it.seatId },
+            seatIds = reservationItemEntityList.map { it.seatId },
             priceAmount = priceAmount,
             reservationStatus = itemRef.reservationStatus
         )

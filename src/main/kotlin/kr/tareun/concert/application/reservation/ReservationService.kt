@@ -4,7 +4,6 @@ import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
-import kr.tareun.concert.domain.reservation.model.Reservation
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,6 +19,6 @@ class ReservationService(
         concertRepository.saveConcertSchedule(schedule)
 
         val newReservation = reserveCommand.toReservation(schedule)
-        return ReservationResult.from(reservationRepository.saveReserve(newReservation))
+        return ReservationResult.from(reservationRepository.saveReservation(newReservation))
     }
 }

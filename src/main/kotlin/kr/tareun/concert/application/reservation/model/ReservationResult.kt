@@ -16,7 +16,7 @@ data class ReservationResult(
                 userId = reservation.userId,
                 scheduleId = reservation.concertScheduleId,
                 priceAmount = reservation.priceAmount,
-                seatIds = reservation.seatIdList,
+                seatIds = reservation.seatIds,
             )
         }
     }

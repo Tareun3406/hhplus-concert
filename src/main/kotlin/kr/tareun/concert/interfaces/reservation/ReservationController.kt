@@ -1,9 +1,12 @@
 package kr.tareun.concert.interfaces.reservation
 
+import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.interfaces.common.response.Response
 import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.interfaces.payment.model.PayRequest
+import kr.tareun.concert.interfaces.payment.model.PaymentHistoryResponse
 import kr.tareun.concert.interfaces.reservation.model.ReservationResponse
 import kr.tareun.concert.interfaces.reservation.model.ReserveRequest
 import org.springframework.web.bind.annotation.*
@@ -25,6 +28,21 @@ class ReservationController(
 //                userId = request.userId,
 //                scheduleId = request.concertScheduleId,
 //                seatNumbers = listOf(1, 2, 3),
+//            )
+        )
+    }
+
+    @PostMapping("/pay")
+    fun payReservedConcert(@RequestBody payRequest: PayRequest): Response<PaymentHistoryResponse> {
+        val command = PayCommand.from(payRequest)
+        return Response(
+            ResponseResultType.SUCCESS,
+            PaymentHistoryResponse.from(reservationService.payReservation(command))
+//            PaymentHistoryResponse(
+//                historyId = 1,
+//                userId = payRequest.userId,
+//                paidAmount = 100_000,
+//                reservationId = payRequest.reservationId,
 //            )
         )
     }

@@ -2,8 +2,6 @@ package kr.tareun.concert.service.payment
 
 import kr.tareun.concert.application.payment.PaymentService
 import kr.tareun.concert.application.payment.model.ChargeCommand
-import kr.tareun.concert.application.payment.model.PayCommand
-import kr.tareun.concert.application.reservation.model.ReserveCommand
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -83,16 +81,5 @@ class PaymentServiceIntegrationTest {
 
         // when - then
         Assertions.assertEquals(userId, paymentService.chargePoint(chargeCommand).userId)
-    }
-
-    @Test
-    fun `예약한 좌석을 결제할 수 있다`() {
-        // given
-        val userId = 1L
-        val reservationId = 1L
-        val reserveCommand = PayCommand(userId, reservationId)
-
-        // when - then
-        Assertions.assertEquals(userId, paymentService.payReservation(reserveCommand).userId)
     }
 }

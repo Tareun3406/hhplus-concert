@@ -1,10 +1,16 @@
 package kr.tareun.concert.service.reservation
 
+import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.concert.model.ConcertSchedule
+import kr.tareun.concert.domain.payment.PaymentRepository
+import kr.tareun.concert.domain.payment.model.PaymentHistory
+import kr.tareun.concert.domain.payment.model.Point
 import kr.tareun.concert.domain.reservation.ReservationRepository
+import kr.tareun.concert.domain.reservation.model.Reservation
+import kr.tareun.concert.domain.reservation.model.ReservationStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,6 +18,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import java.time.LocalDateTime
 
 @Suppress("NonAsciiCharacters")
@@ -21,6 +28,9 @@ class ReservationServiceUnitTest {
 
     @Mock
     private lateinit var concertRepository: ConcertRepository
+
+    @Mock
+    private lateinit var paymentRepository: PaymentRepository
 
     @InjectMocks
     private lateinit var reservationService: ReservationService
@@ -45,5 +55,28 @@ class ReservationServiceUnitTest {
 
         // then
         Assertions.assertEquals(reservation.reservationId, result.reservationId)
+    }
+
+    @Test
+    fun `예약된 좌석을 결제할 수 있다`() {
+        // given
+        val userId = 1L
+        val basePoint = 100_000
+        val reservationId = 1L
+        val point = Point(1, userId, basePoint)
+        val reservation = Reservation(reservationId, userId, 1, listOf(1), 10_000, ReservationStatusType.NON_PAID)
+        val paymentHistory = PaymentHistory(1, userId, reservationId, reservation.priceAmount)
+
+        val payRequest = PayCommand(userId, reservationId)
+
+        `when`(paymentRepository.getPointByUserIdForUpdate(userId)).thenReturn(point)
+        `when`(reservationRepository.getReservationByIdForUpdate(reservationId)).thenReturn(reservation)
+        `when`(paymentRepository.savePaymentHistory(any())).thenReturn(paymentHistory)
+
+        // when
+        val result = reservationService.payReservation(payRequest)
+
+        // then
+        Assertions.assertEquals(userId, result.userId)
     }
 }

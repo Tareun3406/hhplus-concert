@@ -1,4 +1,4 @@
-package kr.tareun.concert.service.concert
+package kr.tareun.concert.concert
 
 import kr.tareun.concert.application.concert.ConcertService
 import kr.tareun.concert.domain.concert.ConcertRepository

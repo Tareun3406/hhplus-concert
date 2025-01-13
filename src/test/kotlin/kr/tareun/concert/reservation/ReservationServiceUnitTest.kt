@@ -1,4 +1,4 @@
-package kr.tareun.concert.service.reservation
+package kr.tareun.concert.reservation
 
 import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService

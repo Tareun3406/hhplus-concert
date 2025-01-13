@@ -1,7 +1,4 @@
-drop database if exists app;
-create database app;
-use app;
-
+DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
     id    BIGINT AUTO_INCREMENT NOT NULL,
@@ -10,6 +7,7 @@ CREATE TABLE user
     CONSTRAINT pk_user PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
@@ -18,6 +16,7 @@ CREATE TABLE reservation
     CONSTRAINT pk_reservation PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS reservation_item;
 CREATE TABLE reservation_item
 (
     id                  BIGINT AUTO_INCREMENT NOT NULL,
@@ -29,6 +28,7 @@ CREATE TABLE reservation_item
     CONSTRAINT pk_reservation_item PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS queue_token;
 CREATE TABLE queue_token
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
@@ -39,15 +39,17 @@ CREATE TABLE queue_token
     CONSTRAINT pk_queue_token PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS payment_history_entity;
 CREATE TABLE payment_history_entity
 (
     id             BIGINT AUTO_INCREMENT NOT NULL,
     user_id        BIGINT                NOT NULL,
     reservation_id BIGINT                NOT NULL,
     paid_point     INT                   NOT NULL,
-    CONSTRAINT pk_paymenthistoryentity PRIMARY KEY (id)
+    CONSTRAINT pk_payment_history_entity PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS point;
 CREATE TABLE point
 (
     id      BIGINT AUTO_INCREMENT NOT NULL,
@@ -56,6 +58,7 @@ CREATE TABLE point
     CONSTRAINT pk_point PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS concert;
 CREATE TABLE concert
 (
     id        BIGINT AUTO_INCREMENT NOT NULL,
@@ -64,6 +67,7 @@ CREATE TABLE concert
     CONSTRAINT pk_concert PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS concert_schedule;
 CREATE TABLE concert_schedule
 (
     id             BIGINT AUTO_INCREMENT NOT NULL,
@@ -75,6 +79,7 @@ CREATE TABLE concert_schedule
     CONSTRAINT pk_concert_schedule PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS location;
 CREATE TABLE location
 (
     id                BIGINT AUTO_INCREMENT NOT NULL,
@@ -83,6 +88,7 @@ CREATE TABLE location
     CONSTRAINT pk_location PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS seat;
 CREATE TABLE seat
 (
     id          BIGINT AUTO_INCREMENT NOT NULL,

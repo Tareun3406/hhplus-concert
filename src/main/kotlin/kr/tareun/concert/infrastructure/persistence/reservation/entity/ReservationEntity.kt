@@ -34,7 +34,7 @@ class ReservationEntity(
             concertScheduleId = itemRef.concertScheduleId,
             seatIds = reservationItemEntityList.map { it.seatId },
             priceAmount = priceAmount,
-            reservationStatus = itemRef.reservationStatus
+            _reservationStatus = itemRef.reservationStatus
         )
     }
 }

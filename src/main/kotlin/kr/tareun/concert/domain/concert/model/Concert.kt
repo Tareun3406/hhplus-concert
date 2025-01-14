@@ -1,7 +1,7 @@
 package kr.tareun.concert.domain.concert.model
 
 data class Concert(
-    var concertId: Long = 0,
-    var concertName: String,
-    var performer: String,
+    val concertId: Long = 0,
+    val concertName: String,
+    val performer: String,
 )

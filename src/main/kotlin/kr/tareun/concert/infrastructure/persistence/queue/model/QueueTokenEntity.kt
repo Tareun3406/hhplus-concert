@@ -38,6 +38,6 @@ class QueueTokenEntity(
         }
     }
     fun toQueueToken(): QueueToken {
-        return QueueToken(tokenId = id, userId = userId, uuid = tokenUuid, status = status, expiredTime = expiredTime)
+        return QueueToken(tokenId = id, userId = userId, uuid = tokenUuid, _status = status, _expiredTime = expiredTime)
     }
 }

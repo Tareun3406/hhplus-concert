@@ -4,19 +4,25 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class QueueToken(
-    var tokenId: Long = 0,
-    var userId: Long,
-    var uuid: UUID = UUID.randomUUID(),
-    var status: TokenStatusType = TokenStatusType.PENDING,
-    var expiredTime: LocalDateTime? = null,
+    val tokenId: Long = 0,
+    val userId: Long,
+    val uuid: UUID = UUID.randomUUID(),
+    private var _status: TokenStatusType = TokenStatusType.PENDING,
+    private var _expiredTime: LocalDateTime? = null,
 ) {
+    val status: TokenStatusType
+        get() = _status
+
+    val expiredTime: LocalDateTime?
+        get() = _expiredTime
+
     fun markedAsExpired() {
-        status = TokenStatusType.EXPIRED
+        _status = TokenStatusType.EXPIRED
     }
     fun markedAsActivated() {
-        status = TokenStatusType.ACTIVATED
+        _status = TokenStatusType.ACTIVATED
     }
     fun updateExpiredTime(time: LocalDateTime) {
-        expiredTime = time
+        _expiredTime = time
     }
 }

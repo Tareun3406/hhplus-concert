@@ -1,9 +1,9 @@
 package kr.tareun.concert.domain.reservation.model
 
 data class ReservationItem(
-    var itemId: Long = 0,
-    var reservationId: Long,
-    var concertScheduleId: Long,
-    var seatId: Long,
-    var reservationStatus: ReservationStatusType
+    val itemId: Long = 0,
+    val reservationId: Long,
+    val concertScheduleId: Long,
+    val seatId: Long,
+    val reservationStatus: ReservationStatusType
 )

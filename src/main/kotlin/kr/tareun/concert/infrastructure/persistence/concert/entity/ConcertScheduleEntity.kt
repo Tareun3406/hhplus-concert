@@ -46,7 +46,7 @@ class ConcertScheduleEntity(
             locationId = locationEntity.id,
             locationName = locationEntity.name,
             locationCapacity = locationEntity.locationCapacity,
-            reservedCount = reservedCount
+            _reservedCount = reservedCount
 
         )
     }

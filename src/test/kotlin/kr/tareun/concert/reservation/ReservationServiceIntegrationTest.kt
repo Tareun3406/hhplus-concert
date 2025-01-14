@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
 import java.util.*
 import java.util.Arrays.asList
+import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")
 @SpringBootTest
@@ -57,5 +58,51 @@ class ReservationServiceIntegrationTest {
 
         // when - then
         Assertions.assertEquals(userId, reservationService.payReservation(reserveCommand).userId)
+    }
+
+    @Test
+    fun `하나의 좌석에 대해 여러번 예약 요청이 들어왔을 경우 하나만 성공한다`() {
+        // given
+        val reserveCommand = ReserveCommand(1, 1, listOf(4L))
+
+        // when
+        val futures = (1..10).map {
+            CompletableFuture.supplyAsync {
+                try {
+                    reservationService.reserveConcert(reserveCommand)
+                    true
+                } catch (e: Exception) {
+                    false
+                }
+            }
+        }
+        val results = futures.map { it.join() }
+
+        // then
+        val successfulReservations = results.count { it }
+        Assertions.assertEquals(1, successfulReservations)
+    }
+
+    @Test
+    fun `하나의 예약에 대해 여러번 결제 요청이 들어왔을 경우 하나만 성공한다`() {
+        // given
+        val payCommand = PayCommand(userId = 1, reservationId = 1)
+
+        // when
+        val futures = (1..10).map {
+            CompletableFuture.supplyAsync {
+                try {
+                    reservationService.payReservation(payCommand)
+                    true
+                } catch (e: Exception) {
+                    false
+                }
+            }
+        }
+        val results = futures.map { it.join() }
+
+        // then
+        val successfulReservations = results.count { it }
+        Assertions.assertEquals(1, successfulReservations)
     }
 }

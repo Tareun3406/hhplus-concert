@@ -1,5 +1,7 @@
 package kr.tareun.concert.domain.reservation.model
 
+import java.lang.RuntimeException
+
 
 data class Reservation(
     val reservationId: Long = 0,
@@ -13,6 +15,9 @@ data class Reservation(
         get() = _reservationStatus
 
     fun markedAsPaid() {
+        if (this.reservationStatus == ReservationStatusType.PAID) {
+            throw RuntimeException("이미 결제 완료된 예약입니다.")
+        }
         this._reservationStatus = ReservationStatusType.PAID
     }
 }

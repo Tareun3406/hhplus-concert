@@ -21,6 +21,15 @@ class ReservationService(
 ) {
     @Transactional
     fun reserveConcert(reserveCommand: ReserveCommand): ReservationResult {
+        // scheduleId 컬럼 기준 Gap Lock 설정
+        reservationRepository.acquireLockByScheduleId(reserveCommand.concertScheduleId)
+
+        // 중복 예약 체크
+        val existReservedList = reservationRepository.getAllReservationItemByScheduleIdAndSeatId(reserveCommand.concertScheduleId, reserveCommand.seatIdList)
+        if (existReservedList.isNotEmpty()) {
+            throw RuntimeException()
+        }
+
         val schedule = concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)
         schedule.addReservedCount(reserveCommand.seatIdList.size)
         concertRepository.saveConcertSchedule(schedule)

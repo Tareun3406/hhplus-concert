@@ -4,6 +4,8 @@ import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.payment.model.PaymentHistoryResult
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
+import kr.tareun.concert.common.exception.CommonException
+import kr.tareun.concert.common.exception.ErrorCode
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory
@@ -27,7 +29,7 @@ class ReservationService(
         // 중복 예약 체크
         val existReservedList = reservationRepository.getAllReservationItemByScheduleIdAndSeatId(reserveCommand.concertScheduleId, reserveCommand.seatIdList)
         if (existReservedList.isNotEmpty()) {
-            throw RuntimeException()
+            throw CommonException(ErrorCode.RESERVATION_SEAT_ALREADY_TAKEN)
         }
 
         val schedule = concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)

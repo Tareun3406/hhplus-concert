@@ -1,5 +1,7 @@
 package kr.tareun.concert.domain.concert.model
 
+import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.exception.CommonException
 import java.time.LocalDateTime
 
 data class ConcertSchedule(
@@ -18,7 +20,7 @@ data class ConcertSchedule(
     fun addReservedCount(count: Int) {
         _reservedCount += count
         if (_reservedCount > locationCapacity) {
-            throw RuntimeException("예약 가능 인원 수를 초과하였습니다.")
+            throw CommonException(ErrorCode.CONCERT_SCHEDULE_CAPACITY_EXCEEDED)
         }
     }
 }

@@ -1,6 +1,7 @@
 package kr.tareun.concert.domain.reservation.model
 
-import java.lang.RuntimeException
+import kr.tareun.concert.common.exception.CommonException
+import kr.tareun.concert.common.exception.ErrorCode
 
 
 data class Reservation(
@@ -16,7 +17,7 @@ data class Reservation(
 
     fun markedAsPaid() {
         if (this.reservationStatus == ReservationStatusType.PAID) {
-            throw RuntimeException("이미 결제 완료된 예약입니다.")
+            throw CommonException(ErrorCode.RESERVATION_ALREADY_PAID)
         }
         this._reservationStatus = ReservationStatusType.PAID
     }

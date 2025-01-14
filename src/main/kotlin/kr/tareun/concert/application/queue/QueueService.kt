@@ -1,6 +1,8 @@
 package kr.tareun.concert.application.queue
 
 import kr.tareun.concert.application.queue.model.QueueTokenResult
+import kr.tareun.concert.common.exception.CommonException
+import kr.tareun.concert.common.exception.ErrorCode
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
 import kr.tareun.concert.domain.queue.model.TokenStatusType
@@ -22,7 +24,7 @@ class QueueService(
         return when (token.status) {
             TokenStatusType.PENDING -> QueueTokenResult.from(token,  queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING))
             TokenStatusType.ACTIVATED -> QueueTokenResult.from(token, 0)
-            TokenStatusType.EXPIRED -> throw RuntimeException("만료된 토큰입니다.")
+            TokenStatusType.EXPIRED -> throw CommonException(ErrorCode.QUEUE_TOKEN_EXPIRED)
         }
     }
 }

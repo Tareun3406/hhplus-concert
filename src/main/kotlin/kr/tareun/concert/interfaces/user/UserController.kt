@@ -6,7 +6,8 @@ import kr.tareun.concert.interfaces.common.response.ResponseResultType
 import kr.tareun.concert.interfaces.user.model.UserResponse
 import org.springframework.web.bind.annotation.*
 
-@RestController("/users")
+@RequestMapping("/users")
+@RestController
 class UserController(
     private val userService: UserService,
 ) {

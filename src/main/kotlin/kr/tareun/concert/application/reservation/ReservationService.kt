@@ -7,6 +7,7 @@ import kr.tareun.concert.application.reservation.model.ReservationResult
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory
+import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,6 +17,7 @@ class ReservationService(
     private val reservationRepository: ReservationRepository,
     private val concertRepository: ConcertRepository,
     private val paymentRepository: PaymentRepository,
+    private val queueRepository: QueueRepository
 ) {
     @Transactional
     fun reserveConcert(reserveCommand: ReserveCommand): ReservationResult {
@@ -42,6 +44,10 @@ class ReservationService(
 
         reservation.markedAsPaid()
         reservationRepository.saveReservation(reservation)
+
+        val queueToken = queueRepository.getQueueByUuid(payCommand.tokenUuid)
+        queueToken.markedAsExpired()
+        queueRepository.saveQueueToken(queueToken)
 
         return PaymentHistoryResult.from(paymentRepository.savePaymentHistory(paymentHistory))
     }

@@ -12,6 +12,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
+import java.util.*
 import java.util.Arrays.asList
 
 @Suppress("NonAsciiCharacters")
@@ -51,7 +52,8 @@ class ReservationServiceIntegrationTest {
         // given
         val userId = 1L
         val reservationId = 1L
-        val reserveCommand = PayCommand(userId, reservationId)
+        val tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
+        val reserveCommand = PayCommand(userId, reservationId, tokenUuid)
 
         // when - then
         Assertions.assertEquals(userId, reservationService.payReservation(reserveCommand).userId)

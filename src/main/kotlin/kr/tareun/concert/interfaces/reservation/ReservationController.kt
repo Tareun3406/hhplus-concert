@@ -10,6 +10,7 @@ import kr.tareun.concert.interfaces.payment.model.PaymentHistoryResponse
 import kr.tareun.concert.interfaces.reservation.model.ReservationResponse
 import kr.tareun.concert.interfaces.reservation.model.ReserveRequest
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 @RequestMapping("/reservation")
 @RestController
@@ -27,8 +28,8 @@ class ReservationController(
     }
 
     @PostMapping("/pay")
-    fun payReservedConcert(@RequestBody payRequest: PayRequest): Response<PaymentHistoryResponse> {
-        val command = PayCommand.from(payRequest)
+    fun payReservedConcert(@RequestBody payRequest: PayRequest, @RequestHeader("Queue-Token") tokenUuid: UUID): Response<PaymentHistoryResponse> {
+        val command = PayCommand.from(payRequest, tokenUuid)
         return Response(
             ResponseResultType.SUCCESS,
             PaymentHistoryResponse.from(reservationService.payReservation(command))

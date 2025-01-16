@@ -1,6 +1,6 @@
-package kr.tareun.concert.infrastructure.config
+package kr.tareun.concert.common.config
 
-import kr.tareun.concert.infrastructure.interceptor.QueueTokenInterceptor
+import kr.tareun.concert.common.interceptor.QueueTokenInterceptor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer

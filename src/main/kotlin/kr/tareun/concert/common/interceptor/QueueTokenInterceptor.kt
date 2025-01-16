@@ -1,4 +1,4 @@
-package kr.tareun.concert.infrastructure.interceptor
+package kr.tareun.concert.common.interceptor
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

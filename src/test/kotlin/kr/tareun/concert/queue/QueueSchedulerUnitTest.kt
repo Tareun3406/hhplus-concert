@@ -4,7 +4,7 @@ import kr.tareun.concert.application.queue.QueueTokenScheduler
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
 import kr.tareun.concert.domain.queue.model.TokenStatusType
-import kr.tareun.concert.infrastructure.config.QueueProperties
+import kr.tareun.concert.common.config.QueueProperties
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock

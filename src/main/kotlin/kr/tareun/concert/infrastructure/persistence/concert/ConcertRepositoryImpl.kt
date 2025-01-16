@@ -4,7 +4,7 @@ import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.concert.model.ConcertSeat
-import kr.tareun.concert.infrastructure.config.ConcertProperties
+import kr.tareun.concert.common.config.ConcertProperties
 import kr.tareun.concert.infrastructure.persistence.concert.entity.ConcertScheduleEntity
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository

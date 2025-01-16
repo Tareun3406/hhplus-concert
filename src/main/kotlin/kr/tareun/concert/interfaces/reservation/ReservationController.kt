@@ -23,12 +23,6 @@ class ReservationController(
         return Response(
             ResponseResultType.SUCCESS,
             ReservationResponse.from(reservationService.reserveConcert(command))
-//            ReservationResponse(
-//                reservationId = 1,
-//                userId = request.userId,
-//                scheduleId = request.concertScheduleId,
-//                seatNumbers = listOf(1, 2, 3),
-//            )
         )
     }
 
@@ -38,12 +32,6 @@ class ReservationController(
         return Response(
             ResponseResultType.SUCCESS,
             PaymentHistoryResponse.from(reservationService.payReservation(command))
-//            PaymentHistoryResponse(
-//                historyId = 1,
-//                userId = payRequest.userId,
-//                paidAmount = 100_000,
-//                reservationId = payRequest.reservationId,
-//            )
         )
     }
 }

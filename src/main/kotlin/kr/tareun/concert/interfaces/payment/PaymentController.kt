@@ -19,7 +19,6 @@ class PaymentController(
         return Response(
             ResponseResultType.SUCCESS,
             PointResponse.from(paymentService.retrievePoint(userId))
-//            PointResponse(userId, 100_000)
         )
     }
 
@@ -29,7 +28,6 @@ class PaymentController(
         return Response(
             ResponseResultType.SUCCESS,
             PointResponse.from(paymentService.chargePoint(command))
-//            PointResponse(chargeRequest.userId, 100_000)
         )
     }
 }

@@ -22,7 +22,6 @@ class QueueController(
         return Response(
             ResponseResultType.SUCCESS,
             QueueResponse.from(queueService.createQueueToken(userId))
-//            QueueResponse(UUID.randomUUID(), userId, 100)
         )
     }
 
@@ -31,7 +30,6 @@ class QueueController(
         return Response(
             ResponseResultType.SUCCESS,
             QueueResponse.from(queueService.getQueueToken(uuid))
-            // QueueResponse(UUID.randomUUID(), 1, 100)
         )
     }
 }

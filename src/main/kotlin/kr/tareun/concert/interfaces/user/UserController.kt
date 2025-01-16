@@ -16,7 +16,6 @@ class UserController(
         return Response(
             ResponseResultType.SUCCESS,
             UserResponse.from(userService.retrieveUserDetail(userId))
-            //UserResponse(userId, "test@test.com", "이용자 1", 10_000)
         )
     }
 }

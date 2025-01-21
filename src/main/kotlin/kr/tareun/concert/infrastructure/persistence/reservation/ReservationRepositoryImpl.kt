@@ -22,6 +22,11 @@ class ReservationRepositoryImpl (
         return itemList.map { it.toReservationItem() }
     }
 
+    override fun getAllReservationItemByScheduleIdAndSeatId(scheduleId: Long, seatIds: List<Long>): List<ReservationItem> {
+        return reservationItemJpaRepository.findAllByScheduleIdAndSeatIdAndStatusOrExpiredAt(scheduleId, seatIds, ReservationStatusType.PAID, LocalDateTime.now())
+            .map { it.toReservationItem() }
+    }
+
     override fun saveReservation(reservation: Reservation): Reservation {
         val reservationEntity = ReservationEntity.from(reservation)
         val reservationResult = reservationJpaRepository.save(reservationEntity)
@@ -42,5 +47,9 @@ class ReservationRepositoryImpl (
         val reservationEntity = reservationJpaRepository.getReferenceById(id)
         val items = reservationItemJpaRepository.findAllByReservationId(reservationEntity.id)
         return reservationEntity.toReservation(items)
+    }
+
+    override fun acquireLockByScheduleId(concertScheduleId: Long) {
+        reservationItemJpaRepository.findAllWithWriteLockByConcertScheduleId(concertScheduleId)
     }
 }

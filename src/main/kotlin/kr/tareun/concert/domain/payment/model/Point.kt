@@ -1,5 +1,8 @@
 package kr.tareun.concert.domain.payment.model
 
+import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.exception.CommonException
+
 data class Point(
     val pointId: Long = 0,
     val userId: Long,
@@ -13,7 +16,7 @@ data class Point(
     }
     fun payPoint(amount: Int) {
         if (_point < amount) {
-            throw RuntimeException("잔액 부족")
+            throw CommonException(ErrorCode.PAYMENT_NOT_ENOUGH_POINT)
         }
         _point -= amount
     }

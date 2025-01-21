@@ -27,6 +27,7 @@ CREATE TABLE reservation_item
     expired_at          TIMESTAMP             NOT NULL,
     CONSTRAINT pk_reservation_item PRIMARY KEY (id)
 );
+CREATE INDEX idx_concert_schedule_id ON reservation_item (concert_schedule_id);
 
 DROP TABLE IF EXISTS queue_token;
 CREATE TABLE queue_token

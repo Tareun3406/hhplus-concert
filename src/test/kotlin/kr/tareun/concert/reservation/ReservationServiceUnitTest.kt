@@ -8,6 +8,8 @@ import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory
 import kr.tareun.concert.domain.payment.model.Point
+import kr.tareun.concert.domain.queue.QueueRepository
+import kr.tareun.concert.domain.queue.model.QueueToken
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationStatusType
@@ -20,6 +22,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import java.time.LocalDateTime
+import java.util.*
 
 @Suppress("NonAsciiCharacters")
 class ReservationServiceUnitTest {
@@ -31,6 +34,9 @@ class ReservationServiceUnitTest {
 
     @Mock
     private lateinit var paymentRepository: PaymentRepository
+
+    @Mock
+    private lateinit var queueRepository: QueueRepository
 
     @InjectMocks
     private lateinit var reservationService: ReservationService
@@ -66,12 +72,14 @@ class ReservationServiceUnitTest {
         val point = Point(1, userId, basePoint)
         val reservation = Reservation(reservationId, userId, 1, listOf(1), 10_000, ReservationStatusType.NON_PAID)
         val paymentHistory = PaymentHistory(1, userId, reservationId, reservation.priceAmount)
-
-        val payRequest = PayCommand(userId, reservationId)
+        val tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
+        val payRequest = PayCommand(userId, reservationId, tokenUuid)
+        val queueToken = QueueToken(1, 1, tokenUuid)
 
         `when`(paymentRepository.getPointByUserIdForUpdate(userId)).thenReturn(point)
         `when`(reservationRepository.getReservationByIdForUpdate(reservationId)).thenReturn(reservation)
         `when`(paymentRepository.savePaymentHistory(any())).thenReturn(paymentHistory)
+        `when`(queueRepository.getQueueByUuid(tokenUuid)).thenReturn(queueToken)
 
         // when
         val result = reservationService.payReservation(payRequest)

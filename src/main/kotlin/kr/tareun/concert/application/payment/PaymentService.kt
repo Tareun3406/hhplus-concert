@@ -15,6 +15,7 @@ class PaymentService(
         return PointResult.from(paymentRepository.getPointByUserId(userId))
     }
 
+    @Transactional
     fun chargePoint(chargeCommand: ChargeCommand): PointResult {
         val point = paymentRepository.getPointByUserIdForUpdate(chargeCommand.userId)
         point.chargePoint(chargeCommand.amount)

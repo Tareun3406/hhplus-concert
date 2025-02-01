@@ -13,6 +13,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
+import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")
 @Import(TestcontainersConfiguration::class)
@@ -54,5 +55,28 @@ class PaymentServiceIntegrationTest {
 
         // when - then
         Assertions.assertEquals(userId, paymentService.chargePoint(chargeCommand).userId)
+    }
+
+    @Test
+    fun `잔액 충전 요청이 동시에 들어올 경우 순차적으로 처리된다`() {
+        // given
+        val userId = 1L
+        val chargeCommand = ChargeCommand(userId, 10000)
+
+        // when
+        val futures = (1..10).map {
+            CompletableFuture.supplyAsync {
+                try {
+                    paymentService.chargePoint(chargeCommand)
+                    true
+                } catch (e: Exception) {
+                    false
+                }
+            }
+        }
+        val results = futures.map { it.join() }
+
+        Assertions.assertEquals(10, results.size)
+        Assertions.assertEquals(110000, paymentService.retrievePoint(userId).point)
     }
 }

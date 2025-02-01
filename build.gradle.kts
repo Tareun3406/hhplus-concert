@@ -36,6 +36,9 @@ dependencies {
 
 	//swagger
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+
+	// lock
+	implementation("org.redisson:redisson-spring-boot-starter:3.43.0")
 }
 
 kotlin {

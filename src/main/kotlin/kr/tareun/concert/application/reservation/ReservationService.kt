@@ -4,6 +4,7 @@ import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.payment.model.PaymentHistoryResult
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
+import kr.tareun.concert.common.aop.annotaion.RedisLock
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.common.exception.ErrorCode
 import kr.tareun.concert.domain.concert.ConcertRepository
@@ -22,10 +23,8 @@ class ReservationService(
     private val queueRepository: QueueRepository
 ) {
     @Transactional
+    @RedisLock(prefix = "'scheduleSeat:' + #reserveCommand.concertScheduleId + '-'", variableKeys = ["#reserveCommand.seatIdList"], ttlSec = 5)
     fun reserveConcert(reserveCommand: ReserveCommand): ReservationResult {
-        // scheduleId 컬럼 기준 Gap Lock 설정
-        reservationRepository.acquireLockByScheduleId(reserveCommand.concertScheduleId)
-
         // 중복 예약 체크
         val existReservedList = reservationRepository.getAllReservationItemByScheduleIdAndSeatId(reserveCommand.concertScheduleId, reserveCommand.seatIdList)
         if (existReservedList.isNotEmpty()) {

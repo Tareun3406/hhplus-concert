@@ -2,7 +2,9 @@ package kr.tareun.concert.common.interceptor
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import kr.tareun.concert.domain.queue.QueueRepository
+import kr.tareun.concert.application.queue.QueueService
+import kr.tareun.concert.common.exception.CommonException
+import kr.tareun.concert.common.exception.ErrorCode
 import kr.tareun.concert.domain.queue.model.TokenStatusType
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
@@ -10,14 +12,18 @@ import java.util.*
 
 @Component
 class QueueTokenInterceptor(
-    private val queueRepository: QueueRepository
+    private val queueService: QueueService,
 ): HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         try{
             val queueToken = request.getHeader("Queue-Token")
             val tokenUuid = UUID.fromString(queueToken)
 
-            return queueRepository.getQueueByUuid(tokenUuid).status == TokenStatusType.ACTIVATED
+            return queueService.getQueueToken(tokenUuid).status == TokenStatusType.ACTIVATED
+        } catch (commonException: CommonException) {
+            if (commonException.errorCode != ErrorCode.QUEUE_TOKEN_EXPIRED) { throw commonException }
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            return false
         } catch (e: IllegalArgumentException) {
             response.status = HttpServletResponse.SC_UNAUTHORIZED
             return false
@@ -25,6 +31,5 @@ class QueueTokenInterceptor(
             response.status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR
             return false
         }
-
     }
 }

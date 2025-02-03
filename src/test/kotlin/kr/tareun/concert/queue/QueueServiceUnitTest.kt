@@ -33,8 +33,7 @@ class QueueServiceUnitTest {
         // given
         val userId = 1L
         val token = QueueToken(1, UUID.randomUUID())
-        `when`(queueRepository.saveQueueToken(any())).thenReturn(token)
-        `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
+        `when`(queueRepository.addQueueToken(any())).thenReturn(token)
 
         // when - then
         Assertions.assertNotNull(queueService.createQueueToken(userId))
@@ -46,8 +45,7 @@ class QueueServiceUnitTest {
         // given
         val uuid = UUID.randomUUID()
         val token = QueueToken(1, uuid)
-        `when`(queueRepository.getQueueByUuid(uuid)).thenReturn(token)
-        `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
+        `when`(queueRepository.retrieveQueueToken(uuid)).thenReturn(token)
 
         // when
         Assertions.assertEquals(uuid, queueService.getQueueToken(uuid).uuid)

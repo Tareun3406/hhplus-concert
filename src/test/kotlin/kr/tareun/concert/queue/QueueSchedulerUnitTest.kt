@@ -13,6 +13,7 @@ import org.mockito.Mockito.anyList
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import java.util.*
 
 @Suppress("NonAsciiCharacters")
@@ -33,16 +34,13 @@ class QueueSchedulerUnitTest {
     @Test
     fun `주기적으로 토큰을 활성화 하고 만료시킬 수 있다`() {
         //given
-        val expiredTokens = listOf(QueueToken(1, UUID.randomUUID()))
-        val pendingTokens = listOf(QueueToken(1, UUID.randomUUID()))
-        `when`(queueRepository.getAllByStatusAndExpiredTimeLessThan(any(), any())).thenReturn(expiredTokens)
-        `when`(queueRepository.countByStatus(TokenStatusType.ACTIVATED)).thenReturn(0)
-        `when`(queueRepository.getAllByStatusOrderByIdAscWithLimit(any(), any())).thenReturn(pendingTokens)
+        `when`(queueRepository.countActivatedToken()).thenReturn(1)
 
         // when
         val result = queueTokenScheduler.scheduleActivateToken()
 
         // then
-        Mockito.verify(queueRepository, Mockito.times(2)).saveAllQueueTokens(anyList())
+        verify(queueRepository).removeExpiredTokens(any())
+        verify(queueRepository).activateToken(any(), any())
     }
 }

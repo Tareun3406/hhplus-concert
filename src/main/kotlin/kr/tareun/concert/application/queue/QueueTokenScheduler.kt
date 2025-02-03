@@ -17,17 +17,9 @@ class QueueTokenScheduler(
     @Transactional
     @Scheduled(fixedDelay = 5000)
     fun scheduleActivateToken() {
-        val expiredTokens = queueRepository.getAllByStatusAndExpiredTimeLessThan(TokenStatusType.ACTIVATED, LocalDateTime.now())
-        expiredTokens.forEach{ it.markedAsExpired() }
-        queueRepository.saveAllQueueTokens(expiredTokens)
-
-        val activatedTokenCount = queueRepository.countByStatus(TokenStatusType.ACTIVATED)
-        val availableTokenCount = queueProperties.maxActivateTokenSize - activatedTokenCount.toInt() + expiredTokens.size
-        val availableTokens = queueRepository.getAllByStatusOrderByIdAscWithLimit(TokenStatusType.ACTIVATED, availableTokenCount)
-        availableTokens.forEach {
-            it.markedAsActivated();
-            it.updateExpiredTime(LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute))
-        }
-        queueRepository.saveAllQueueTokens(availableTokens)
+        queueRepository.removeExpiredTokens()
+        val activatedTokenCount = queueRepository.countActivatedToken()
+        val availableTokenCount = queueProperties.maxActivateTokenSize - activatedTokenCount
+        queueRepository.activateToken(availableTokenCount, LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute))
     }
 }

@@ -21,6 +21,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import java.time.LocalDateTime
 import java.util.*
 
@@ -79,12 +80,12 @@ class ReservationServiceUnitTest {
         `when`(paymentRepository.getPointByUserIdForUpdate(userId)).thenReturn(point)
         `when`(reservationRepository.getReservationByIdForUpdate(reservationId)).thenReturn(reservation)
         `when`(paymentRepository.savePaymentHistory(any())).thenReturn(paymentHistory)
-        `when`(queueRepository.getQueueByUuid(tokenUuid)).thenReturn(queueToken)
 
         // when
         val result = reservationService.payReservation(payRequest)
 
         // then
         Assertions.assertEquals(userId, result.userId)
+        verify(queueRepository).removeActivatedQueueToken(queueToken.uuid)
     }
 }

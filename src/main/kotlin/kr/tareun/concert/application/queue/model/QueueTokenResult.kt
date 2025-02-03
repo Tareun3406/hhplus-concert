@@ -7,14 +7,14 @@ import java.util.UUID
 data class QueueTokenResult(
     val uuid: UUID,
     val status: TokenStatusType,
-    val remainingQueue: Long
+    val remainingQueue: Int
 ) {
     companion object {
-        fun from(queueToken: QueueToken, remainingQueue: Long): QueueTokenResult {
+        fun from(queueToken: QueueToken): QueueTokenResult {
             return QueueTokenResult(
                 uuid = queueToken.uuid,
                 status = queueToken.status,
-                remainingQueue = remainingQueue
+                remainingQueue = queueToken.remainingQueue
             )
         }
     }

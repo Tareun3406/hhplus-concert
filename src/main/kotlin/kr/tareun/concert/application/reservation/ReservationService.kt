@@ -55,9 +55,7 @@ class ReservationService(
         reservation.markedAsPaid()
         reservationRepository.saveReservation(reservation)
 
-        val queueToken = queueRepository.getQueueByUuid(payCommand.tokenUuid)
-        queueToken.markedAsExpired()
-        queueRepository.saveQueueToken(queueToken)
+        queueRepository.removeActivatedQueueToken(payCommand.tokenUuid)
 
         return PaymentHistoryResult.from(paymentRepository.savePaymentHistory(paymentHistory))
     }

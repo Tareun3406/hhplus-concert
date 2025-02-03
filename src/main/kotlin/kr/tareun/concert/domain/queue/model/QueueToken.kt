@@ -5,7 +5,6 @@ import java.util.*
 
 data class QueueToken(
     val tokenId: Long = 0,
-    val userId: Long,
     val uuid: UUID = UUID.randomUUID(),
     private var _status: TokenStatusType = TokenStatusType.PENDING,
     private var _expiredTime: LocalDateTime? = null,

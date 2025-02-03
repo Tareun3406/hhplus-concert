@@ -14,9 +14,6 @@ class QueueTokenEntity(
     var id: Long = 0,
 
     @Column(nullable = false)
-    val userId: Long,
-
-    @Column(nullable = false)
     val tokenUuid: UUID,
 
     @Column(nullable = false)
@@ -30,7 +27,6 @@ class QueueTokenEntity(
         fun from(queueToken: QueueToken): QueueTokenEntity {
             return QueueTokenEntity(
                 id = queueToken.tokenId,
-                userId = queueToken.userId,
                 tokenUuid = queueToken.uuid,
                 expiredTime = queueToken.expiredTime,
                 status = queueToken.status,
@@ -38,6 +34,6 @@ class QueueTokenEntity(
         }
     }
     fun toQueueToken(): QueueToken {
-        return QueueToken(tokenId = id, userId = userId, uuid = tokenUuid, _status = status, _expiredTime = expiredTime)
+        return QueueToken(tokenId = id, uuid = tokenUuid, _status = status, _expiredTime = expiredTime)
     }
 }

@@ -74,7 +74,7 @@ class ReservationServiceUnitTest {
         val paymentHistory = PaymentHistory(1, userId, reservationId, reservation.priceAmount)
         val tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
         val payRequest = PayCommand(userId, reservationId, tokenUuid)
-        val queueToken = QueueToken(1, 1, tokenUuid)
+        val queueToken = QueueToken(1, tokenUuid)
 
         `when`(paymentRepository.getPointByUserIdForUpdate(userId)).thenReturn(point)
         `when`(reservationRepository.getReservationByIdForUpdate(reservationId)).thenReturn(reservation)

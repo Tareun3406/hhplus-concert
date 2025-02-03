@@ -39,7 +39,7 @@ class QueueServiceIntegrationTest {
         val userId = 1L
 
         // when - then
-        Assertions.assertEquals(userId, queueService.createQueueToken(userId).userId)
+        Assertions.assertNotNull(queueService.createQueueToken(userId))
     }
 
     @Test

@@ -14,7 +14,7 @@ class QueueService(
     private val queueRepository: QueueRepository
 ){
     fun createQueueToken(userId: Long): QueueTokenResult {
-        val newToken = QueueToken(userId = userId)
+        val newToken = QueueToken()
         val newTokenId = queueRepository.saveQueueToken(newToken).tokenId
         val remainingQueue =  queueRepository.countQueueByIdLessThanAndStatus(newTokenId, TokenStatusType.PENDING)
         return QueueTokenResult.from(newToken, remainingQueue)

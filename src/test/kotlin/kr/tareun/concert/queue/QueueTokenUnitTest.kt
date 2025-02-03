@@ -15,7 +15,6 @@ class QueueTokenUnitTest {
         // given
         val token = QueueToken(
             tokenId = 1,
-            userId = 1,
             uuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"),
             _status = TokenStatusType.PENDING,
         )
@@ -32,7 +31,6 @@ class QueueTokenUnitTest {
         // given
         val token = QueueToken(
             tokenId = 1,
-            userId = 1,
             uuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"),
             _status = TokenStatusType.PENDING,
         )
@@ -49,7 +47,6 @@ class QueueTokenUnitTest {
         // given
         val token = QueueToken(
             tokenId = 1,
-            userId = 1,
             uuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"),
             _status = TokenStatusType.ACTIVATED,
         )

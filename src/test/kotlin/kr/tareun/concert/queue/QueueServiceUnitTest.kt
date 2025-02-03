@@ -32,12 +32,12 @@ class QueueServiceUnitTest {
     fun `대기열 토큰을 생성할 수 있다`() {
         // given
         val userId = 1L
-        val token = QueueToken(1, userId, UUID.randomUUID())
+        val token = QueueToken(1, UUID.randomUUID())
         `when`(queueRepository.saveQueueToken(any())).thenReturn(token)
         `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
 
         // when - then
-        Assertions.assertEquals(userId, queueService.createQueueToken(userId).userId)
+        Assertions.assertNotNull(queueService.createQueueToken(userId))
 
     }
 
@@ -45,7 +45,7 @@ class QueueServiceUnitTest {
     fun `대기열 토큰을 확인 할 수 있다`() {
         // given
         val uuid = UUID.randomUUID()
-        val token = QueueToken(1, 1, uuid)
+        val token = QueueToken(1, uuid)
         `when`(queueRepository.getQueueByUuid(uuid)).thenReturn(token)
         `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
 

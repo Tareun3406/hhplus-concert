@@ -33,7 +33,6 @@ DROP TABLE IF EXISTS queue_token;
 CREATE TABLE queue_token
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
-    user_id      BIGINT                NOT NULL,
     token_uuid   varchar(255)          NOT NULL,
     status       varchar(255)          NOT NULL,
     expired_time datetime              NULL,
@@ -108,4 +107,4 @@ insert into seat values (1, 1, 1),(2, 1, 2),(3, 1, 3),(4, 1, 4);
 insert into reservation value (1, 1, 1);
 insert into reservation_item value (1, 1, 1, 1, 'NON_PAID', NOW());
 
-insert into queue_token value (1, 1, '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', 'PENDING', null);
+insert into queue_token value (1, '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', 'PENDING', null);

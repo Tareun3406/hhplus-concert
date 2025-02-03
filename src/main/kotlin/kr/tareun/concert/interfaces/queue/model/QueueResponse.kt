@@ -5,7 +5,7 @@ import java.util.*
 
 data class QueueResponse(
     val uuid: UUID,
-    val remainingQueue: Long
+    val remainingQueue: Int
 ) {
     companion object {
         fun from(queueTokenResult: QueueTokenResult): QueueResponse {

@@ -3,7 +3,6 @@ package kr.tareun.concert.queue
 import kr.tareun.concert.application.queue.QueueService
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.common.enums.TokenStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,8 +32,7 @@ class QueueServiceUnitTest {
         // given
         val userId = 1L
         val token = QueueToken(1, UUID.randomUUID())
-        `when`(queueRepository.saveQueueToken(any())).thenReturn(token)
-        `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
+        `when`(queueRepository.addQueueToken(any())).thenReturn(token)
 
         // when - then
         Assertions.assertNotNull(queueService.createQueueToken(userId))
@@ -46,8 +44,7 @@ class QueueServiceUnitTest {
         // given
         val uuid = UUID.randomUUID()
         val token = QueueToken(1, uuid)
-        `when`(queueRepository.getQueueByUuid(uuid)).thenReturn(token)
-        `when`(queueRepository.countQueueByIdLessThanAndStatus(token.tokenId, TokenStatusType.PENDING)).thenReturn(0)
+        `when`(queueRepository.retrieveQueueToken(uuid)).thenReturn(token)
 
         // when
         Assertions.assertEquals(uuid, queueService.getQueueToken(uuid).uuid)

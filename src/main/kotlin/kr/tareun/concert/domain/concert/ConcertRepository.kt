@@ -5,6 +5,7 @@ import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.concert.model.ConcertSeat
 
 interface ConcertRepository {
+    fun getConcertById(id: Long): Concert
     fun getConcertList(pageNumber: Int): List<Concert>
     fun saveConcertSchedule(schedule: ConcertSchedule): ConcertSchedule
     fun getConcertScheduleListByConcertId(concertId: Long): List<ConcertSchedule>

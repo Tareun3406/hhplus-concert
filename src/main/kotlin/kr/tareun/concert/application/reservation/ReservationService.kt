@@ -2,6 +2,7 @@ package kr.tareun.concert.application.reservation
 
 import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.payment.model.PaymentHistoryResult
+import kr.tareun.concert.application.reservation.model.ReservationRankedConcertResult
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
 import kr.tareun.concert.common.aop.annotaion.RedisLock
@@ -36,7 +37,13 @@ class ReservationService(
         concertRepository.saveConcertSchedule(schedule)
 
         val newReservation = reserveCommand.toReservation(schedule)
-        return ReservationResult.from(reservationRepository.saveReservation(newReservation))
+        val resultReservation = reservationRepository.saveReservation(newReservation)
+
+        // 예약된 콘서트의 예약 횟수 캐시데이터 추가.
+        val concert = concertRepository.getConcertById(schedule.concertId)
+        reservationRepository.incrementCacheReservationCount(concert)
+
+        return ReservationResult.from(resultReservation)
     }
 
     @Transactional
@@ -60,5 +67,9 @@ class ReservationService(
         queueRepository.saveQueueToken(queueToken)
 
         return PaymentHistoryResult.from(paymentRepository.savePaymentHistory(paymentHistory))
+    }
+
+    fun getReservationRankedList(rankingSize: Int): List<ReservationRankedConcertResult> {
+        return reservationRepository.getReservationRankedConcert(rankingSize).map { ReservationRankedConcertResult.from(it) }
     }
 }

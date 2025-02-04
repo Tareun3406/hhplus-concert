@@ -25,7 +25,7 @@ class QueueTokenScheduler(
         val availableTokenCount = queueProperties.maxActivateTokenSize - activatedTokenCount.toInt() + expiredTokens.size
         val availableTokens = queueRepository.getAllByStatusOrderByIdAscWithLimit(TokenStatusType.ACTIVATED, availableTokenCount)
         availableTokens.forEach {
-            it.markedAsActivated();
+            it.markedAsActivated()
             it.updateExpiredTime(LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute))
         }
         queueRepository.saveAllQueueTokens(availableTokens)

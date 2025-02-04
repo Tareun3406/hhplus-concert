@@ -17,7 +17,7 @@ class ReservationRepositoryImpl (
 
     private val concertProperties: ConcertProperties
 ): ReservationRepository {
-    override fun getAllValidReservationItem(scheduleId: Long, ): List<ReservationItem> {
+    override fun getAllValidReservationItem(scheduleId: Long): List<ReservationItem> {
         val itemList = reservationItemJpaRepository.findAllByScheduleIdAndStatusOrExpiredAt(scheduleId, ReservationStatusType.PAID, LocalDateTime.now())
         return itemList.map { it.toReservationItem() }
     }
@@ -35,7 +35,7 @@ class ReservationRepositoryImpl (
         if (reservation.reservationId == 0L) {
             items = ReservationItemEntity.createNewReservationItems(reservation, LocalDateTime.now().plusMinutes(concertProperties.expiredMinute))
         } else {
-            items = reservationItemJpaRepository.findAllByReservationId(reservation.reservationId);
+            items = reservationItemJpaRepository.findAllByReservationId(reservation.reservationId)
             items.forEach{ it.reservationStatus = reservation.reservationStatus }
         }
         val itemsResult = reservationItemJpaRepository.saveAll(items)

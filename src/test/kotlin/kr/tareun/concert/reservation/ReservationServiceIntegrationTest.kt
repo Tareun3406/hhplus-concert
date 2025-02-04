@@ -13,7 +13,6 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
 import java.util.*
-import java.util.Arrays.asList
 import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")
@@ -39,7 +38,7 @@ class ReservationServiceIntegrationTest {
     @Test
     fun `좌석을 예약할 수 있다`() {
         // given
-        val reserveCommand = ReserveCommand(userId = 1, concertScheduleId = 1, seatIdList = asList(2,3))
+        val reserveCommand = ReserveCommand(userId = 1, concertScheduleId = 1, seatIdList = listOf(2,3))
 
         // when
         val result = reservationService.reserveConcert(reserveCommand)

@@ -18,7 +18,7 @@ class ConcertController(
     private val concertService: ConcertService,
 ) {
 
-    @GetMapping()
+    @GetMapping
     fun getAllConcerts(@RequestParam pageNumber: Int): Response<List<ConcertResponse>> {
         return Response(
             ResponseResultType.SUCCESS,

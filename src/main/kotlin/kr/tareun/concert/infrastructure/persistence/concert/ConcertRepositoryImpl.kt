@@ -18,6 +18,10 @@ class ConcertRepositoryImpl(
 
     private val concertProperties: ConcertProperties
 ): ConcertRepository {
+    override fun getConcertById(id: Long): Concert {
+        return concertJpaRepository.getReferenceById(id).toConcert()
+    }
+
     override fun getConcertList(pageNumber: Int): List<Concert> {
         return concertJpaRepository.findAll(PageRequest.of(pageNumber, concertProperties.concertListPageSize)).get().map { it.toConcert() }.toList()
     }

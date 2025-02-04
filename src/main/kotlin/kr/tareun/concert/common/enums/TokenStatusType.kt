@@ -1,4 +1,4 @@
-package kr.tareun.concert.domain.queue.model
+package kr.tareun.concert.common.enums
 
 enum class TokenStatusType {
     PENDING,

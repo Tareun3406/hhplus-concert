@@ -2,7 +2,7 @@ package kr.tareun.concert.interfaces.user
 
 import kr.tareun.concert.application.user.UserService
 import kr.tareun.concert.interfaces.common.response.Response
-import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.common.enums.ResponseResultType
 import kr.tareun.concert.interfaces.user.model.UserResponse
 import org.springframework.web.bind.annotation.*
 

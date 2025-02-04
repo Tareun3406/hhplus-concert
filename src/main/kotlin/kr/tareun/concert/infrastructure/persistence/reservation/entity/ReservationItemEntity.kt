@@ -3,7 +3,7 @@ package kr.tareun.concert.infrastructure.persistence.reservation.entity
 import jakarta.persistence.*
 import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.common.enums.ReservationStatusType
 import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 

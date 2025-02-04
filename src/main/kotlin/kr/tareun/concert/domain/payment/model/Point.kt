@@ -1,6 +1,6 @@
 package kr.tareun.concert.domain.payment.model
 
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.common.exception.CommonException
 
 data class Point(

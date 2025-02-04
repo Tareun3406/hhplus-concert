@@ -1,4 +1,4 @@
-package kr.tareun.concert.domain.reservation.model
+package kr.tareun.concert.common.enums
 
 enum class ReservationStatusType {
     NON_PAID,

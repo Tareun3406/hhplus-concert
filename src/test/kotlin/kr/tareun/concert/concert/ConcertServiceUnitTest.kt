@@ -7,7 +7,7 @@ import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.concert.model.ConcertSeat
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.ReservationItem
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.common.enums.ReservationStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

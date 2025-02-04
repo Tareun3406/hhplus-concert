@@ -1,4 +1,4 @@
-package kr.tareun.concert.common.exception
+package kr.tareun.concert.common.enums
 
 enum class ErrorCode(val code: String, val message: String) {
     // concert 관련 (prefix: CC)

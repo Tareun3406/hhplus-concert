@@ -1,5 +1,6 @@
 package kr.tareun.concert.domain.queue.model
 
+import kr.tareun.concert.common.enums.TokenStatusType
 import java.time.LocalDateTime
 import java.util.*
 

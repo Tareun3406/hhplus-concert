@@ -3,7 +3,7 @@ package kr.tareun.concert.common.interceptor
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kr.tareun.concert.domain.queue.QueueRepository
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import java.util.*

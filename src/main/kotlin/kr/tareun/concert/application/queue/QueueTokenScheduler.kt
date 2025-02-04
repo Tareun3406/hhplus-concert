@@ -1,7 +1,7 @@
 package kr.tareun.concert.application.queue
 
 import kr.tareun.concert.domain.queue.QueueRepository
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import kr.tareun.concert.common.config.QueueProperties
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component

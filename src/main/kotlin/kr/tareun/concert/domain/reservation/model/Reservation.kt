@@ -1,7 +1,8 @@
 package kr.tareun.concert.domain.reservation.model
 
+import kr.tareun.concert.common.enums.ReservationStatusType
 import kr.tareun.concert.common.exception.CommonException
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 
 
 data class Reservation(

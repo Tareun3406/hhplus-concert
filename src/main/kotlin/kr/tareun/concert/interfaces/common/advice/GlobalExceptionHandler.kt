@@ -2,7 +2,7 @@ package kr.tareun.concert.interfaces.common.advice
 
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.interfaces.common.response.Response
-import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.common.enums.ResponseResultType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.ExceptionHandler

@@ -3,7 +3,7 @@ package kr.tareun.concert.interfaces.payment
 import kr.tareun.concert.application.payment.PaymentService
 import kr.tareun.concert.application.payment.model.ChargeCommand
 import kr.tareun.concert.interfaces.common.response.Response
-import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.common.enums.ResponseResultType
 import kr.tareun.concert.interfaces.payment.model.ChargeRequest
 import kr.tareun.concert.interfaces.payment.model.PointResponse
 import org.springframework.web.bind.annotation.*

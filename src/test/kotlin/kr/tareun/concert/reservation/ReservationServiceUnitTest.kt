@@ -12,7 +12,7 @@ import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.Reservation
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.common.enums.ReservationStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

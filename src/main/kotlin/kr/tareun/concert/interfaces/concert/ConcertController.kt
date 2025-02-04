@@ -2,7 +2,7 @@ package kr.tareun.concert.interfaces.concert
 
 import kr.tareun.concert.application.concert.ConcertService
 import kr.tareun.concert.interfaces.common.response.Response
-import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.common.enums.ResponseResultType
 import kr.tareun.concert.interfaces.concert.model.ConcertResponse
 import kr.tareun.concert.interfaces.concert.model.ConcertScheduleResponse
 import kr.tareun.concert.interfaces.concert.model.ConcertSeatResponse

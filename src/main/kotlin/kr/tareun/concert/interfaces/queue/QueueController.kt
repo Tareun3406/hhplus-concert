@@ -2,7 +2,7 @@ package kr.tareun.concert.interfaces.queue
 
 import kr.tareun.concert.application.queue.QueueService
 import kr.tareun.concert.interfaces.common.response.Response
-import kr.tareun.concert.interfaces.common.response.ResponseResultType
+import kr.tareun.concert.common.enums.ResponseResultType
 import kr.tareun.concert.interfaces.queue.model.QueueResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

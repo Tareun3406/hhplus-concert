@@ -2,7 +2,7 @@ package kr.tareun.concert.infrastructure.persistence.queue
 
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import kr.tareun.concert.infrastructure.persistence.queue.model.QueueTokenEntity
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository

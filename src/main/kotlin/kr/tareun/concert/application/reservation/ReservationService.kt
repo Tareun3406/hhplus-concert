@@ -6,7 +6,7 @@ import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
 import kr.tareun.concert.common.aop.annotaion.RedisLock
 import kr.tareun.concert.common.exception.CommonException
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory

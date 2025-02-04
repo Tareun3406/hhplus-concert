@@ -3,7 +3,7 @@ package kr.tareun.concert.queue
 import kr.tareun.concert.application.queue.QueueService
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

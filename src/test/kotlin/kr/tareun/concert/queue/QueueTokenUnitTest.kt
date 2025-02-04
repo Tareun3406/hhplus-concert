@@ -1,7 +1,7 @@
 package kr.tareun.concert.queue
 
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

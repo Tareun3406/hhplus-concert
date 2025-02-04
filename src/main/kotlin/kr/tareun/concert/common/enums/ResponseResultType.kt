@@ -1,4 +1,4 @@
-package kr.tareun.concert.interfaces.common.response
+package kr.tareun.concert.common.enums
 
 enum class ResponseResultType {
     SUCCESS,

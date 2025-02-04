@@ -1,6 +1,6 @@
 package kr.tareun.concert.payment
 
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.domain.payment.model.Point
 import org.junit.jupiter.api.Assertions

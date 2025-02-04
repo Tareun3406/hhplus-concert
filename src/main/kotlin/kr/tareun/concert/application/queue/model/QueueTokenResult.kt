@@ -1,7 +1,7 @@
 package kr.tareun.concert.application.queue.model
 
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import java.util.UUID
 
 data class QueueTokenResult(

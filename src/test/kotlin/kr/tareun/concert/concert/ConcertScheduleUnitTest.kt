@@ -1,6 +1,6 @@
 package kr.tareun.concert.concert
 
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import org.junit.jupiter.api.Assertions

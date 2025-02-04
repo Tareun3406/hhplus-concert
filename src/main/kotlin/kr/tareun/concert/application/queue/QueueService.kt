@@ -2,10 +2,10 @@ package kr.tareun.concert.application.queue
 
 import kr.tareun.concert.application.queue.model.QueueTokenResult
 import kr.tareun.concert.common.exception.CommonException
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.domain.queue.model.TokenStatusType
+import kr.tareun.concert.common.enums.TokenStatusType
 import org.springframework.stereotype.Service
 import java.util.UUID
 

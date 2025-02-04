@@ -1,9 +1,9 @@
 package kr.tareun.concert.reservation
 
 import kr.tareun.concert.common.exception.CommonException
-import kr.tareun.concert.common.exception.ErrorCode
+import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.domain.reservation.model.Reservation
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.common.enums.ReservationStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

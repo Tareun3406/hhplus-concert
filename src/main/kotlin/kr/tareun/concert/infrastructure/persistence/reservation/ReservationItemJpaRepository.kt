@@ -1,7 +1,7 @@
 package kr.tareun.concert.infrastructure.persistence.reservation
 
 import jakarta.persistence.LockModeType
-import kr.tareun.concert.domain.reservation.model.ReservationStatusType
+import kr.tareun.concert.common.enums.ReservationStatusType
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationItemEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Lock

@@ -2,9 +2,11 @@ package kr.tareun.concert.application.reservation
 
 import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.payment.model.PaymentHistoryResult
+import kr.tareun.concert.application.reservation.model.ReservationRankedConcertResult
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
 import kr.tareun.concert.common.aop.annotaion.RedisLock
+import kr.tareun.concert.common.config.ReservationProperties
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.domain.concert.ConcertRepository
@@ -14,13 +16,16 @@ import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 class ReservationService(
     private val reservationRepository: ReservationRepository,
     private val concertRepository: ConcertRepository,
     private val paymentRepository: PaymentRepository,
-    private val queueRepository: QueueRepository
+    private val queueRepository: QueueRepository,
+
+    private val reservationProperties: ReservationProperties,
 ) {
     @Transactional
     @RedisLock(prefix = "'scheduleSeat:' + #reserveCommand.concertScheduleId + '-'", variableKeys = ["#reserveCommand.seatIdList"], ttlSec = 5)
@@ -36,7 +41,13 @@ class ReservationService(
         concertRepository.saveConcertSchedule(schedule)
 
         val newReservation = reserveCommand.toReservation(schedule)
-        return ReservationResult.from(reservationRepository.saveReservation(newReservation))
+        val resultReservation = reservationRepository.saveReservation(newReservation)
+
+        // 예약된 콘서트의 예약 횟수 캐시데이터 추가.
+        val concert = concertRepository.getConcertById(schedule.concertId)
+        reservationRepository.incrementCacheReservationCount(concert)
+
+        return ReservationResult.from(resultReservation)
     }
 
     @Transactional
@@ -55,10 +66,13 @@ class ReservationService(
         reservation.markedAsPaid()
         reservationRepository.saveReservation(reservation)
 
-        val queueToken = queueRepository.getQueueByUuid(payCommand.tokenUuid)
-        queueToken.markedAsExpired()
-        queueRepository.saveQueueToken(queueToken)
+        queueRepository.removeActivatedQueueToken(payCommand.tokenUuid)
 
         return PaymentHistoryResult.from(paymentRepository.savePaymentHistory(paymentHistory))
+    }
+
+    fun getReservationRankedList(rankingSize: Int): List<ReservationRankedConcertResult> {
+        val referenceTime = LocalDateTime.now().minusMinutes(reservationProperties.reservationRankingCacheCycleMinute.toLong())
+        return reservationRepository.getReservationRankedConcert(rankingSize, referenceTime).map { ReservationRankedConcertResult.from(it) }
     }
 }

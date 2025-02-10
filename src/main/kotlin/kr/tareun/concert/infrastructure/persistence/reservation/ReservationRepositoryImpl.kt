@@ -5,6 +5,8 @@ import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
 import kr.tareun.concert.common.enums.ReservationStatusType
 import kr.tareun.concert.common.config.ConcertProperties
+import kr.tareun.concert.domain.concert.model.Concert
+import kr.tareun.concert.infrastructure.persistence.reservation.entity.ConcertCacheEntity
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationEntity
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationItemEntity
 import org.springframework.stereotype.Repository
@@ -14,6 +16,7 @@ import java.time.LocalDateTime
 class ReservationRepositoryImpl (
     private val reservationJpaRepository: ReservationJpaRepository,
     private val reservationItemJpaRepository: ReservationItemJpaRepository,
+    private val reservationRedisCacheRepository: ReservationRedisCacheRepository,
 
     private val concertProperties: ConcertProperties
 ): ReservationRepository {
@@ -51,5 +54,13 @@ class ReservationRepositoryImpl (
 
     override fun acquireLockByScheduleId(concertScheduleId: Long) {
         reservationItemJpaRepository.findAllWithWriteLockByConcertScheduleId(concertScheduleId)
+    }
+
+    override fun incrementCacheReservationCount(concert: Concert) {
+        reservationRedisCacheRepository.increaseReservationCountToConcert(ConcertCacheEntity.from(concert), LocalDateTime.now())
+    }
+
+    override fun getReservationRankedConcert(rankingSize: Int, referenceTime: LocalDateTime): List<Concert> {
+        return reservationRedisCacheRepository.getRankedConcertList(rankingSize, referenceTime).map { it.toConcert() }
     }
 }

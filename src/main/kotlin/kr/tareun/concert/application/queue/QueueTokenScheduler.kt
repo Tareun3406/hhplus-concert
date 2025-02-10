@@ -1,7 +1,6 @@
 package kr.tareun.concert.application.queue
 
 import kr.tareun.concert.domain.queue.QueueRepository
-import kr.tareun.concert.common.enums.TokenStatusType
 import kr.tareun.concert.common.config.QueueProperties
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -17,17 +16,17 @@ class QueueTokenScheduler(
     @Transactional
     @Scheduled(fixedDelay = 5000)
     fun scheduleActivateToken() {
-        val expiredTokens = queueRepository.getAllByStatusAndExpiredTimeLessThan(TokenStatusType.ACTIVATED, LocalDateTime.now())
-        expiredTokens.forEach{ it.markedAsExpired() }
-        queueRepository.saveAllQueueTokens(expiredTokens)
+        queueRepository.removeExpiredTokens()
+        val activatedTokenCount = queueRepository.countActivatedToken()
+        val availableTokenCount = queueProperties.maxActivateTokenSize - activatedTokenCount
+        queueRepository.activateToken(availableTokenCount, LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute))
+    }
 
-        val activatedTokenCount = queueRepository.countByStatus(TokenStatusType.ACTIVATED)
-        val availableTokenCount = queueProperties.maxActivateTokenSize - activatedTokenCount.toInt() + expiredTokens.size
-        val availableTokens = queueRepository.getAllByStatusOrderByIdAscWithLimit(TokenStatusType.ACTIVATED, availableTokenCount)
-        availableTokens.forEach {
-            it.markedAsActivated()
-            it.updateExpiredTime(LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute))
-        }
-        queueRepository.saveAllQueueTokens(availableTokens)
+    // 놀이공원 방식
+    @Transactional
+    @Scheduled(fixedDelay = 6000) // M = 약 6초
+    fun scheduleActivateToken2() {
+        queueRepository.removeExpiredTokens()
+        queueRepository.activateToken(1300, LocalDateTime.now().plusMinutes(queueProperties.expiredTimeMinute)) // N 개 (1300) 토큰 활성화
     }
 }

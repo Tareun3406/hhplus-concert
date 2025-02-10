@@ -1,17 +1,16 @@
 package kr.tareun.concert.domain.queue
 
 import kr.tareun.concert.domain.queue.model.QueueToken
-import kr.tareun.concert.common.enums.TokenStatusType
 import java.time.LocalDateTime
 import java.util.*
 
 interface QueueRepository {
-    fun saveQueueToken(queue: QueueToken): QueueToken
-    fun saveAllQueueTokens(queues: List<QueueToken>): List<QueueToken>
-    fun getQueueByUuid(uuid: UUID): QueueToken
-    fun countQueueByIdLessThanAndStatus(id: Long, status: TokenStatusType): Long
+    fun addQueueToken(token: QueueToken): QueueToken
+    fun removeActivatedQueueToken(uuid: UUID)
+    fun retrieveQueueRemaining(token: QueueToken): Int?
+    fun retrieveQueueToken(uuid: UUID): QueueToken?
 
-    fun getAllByStatusAndExpiredTimeLessThan(status: TokenStatusType, time: LocalDateTime): List<QueueToken>
-    fun countByStatus(status: TokenStatusType): Long
-    fun getAllByStatusOrderByIdAscWithLimit(status: TokenStatusType, limit: Int): List<QueueToken>
+    fun removeExpiredTokens(unixTime: Long = System.currentTimeMillis()): Int
+    fun countActivatedToken(): Int
+    fun activateToken(count: Int, expireTime: LocalDateTime): Int
 }

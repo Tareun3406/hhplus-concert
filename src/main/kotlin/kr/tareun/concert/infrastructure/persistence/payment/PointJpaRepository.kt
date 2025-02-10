@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PointJpaRepository: JpaRepository<PointEntity, Long> {
 
+    fun getReferenceByUserId(userId: Long): PointEntity
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     fun getForUpdateByUserId(userId: Long): PointEntity
 

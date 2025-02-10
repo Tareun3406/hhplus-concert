@@ -17,7 +17,7 @@ class PaymentRepositoryImpl(
     }
 
     override fun getPointByUserId(userId: Long): Point {
-        return pointJpaRepository.getReferenceById(userId).toPoint()
+        return pointJpaRepository.getReferenceByUserId(userId).toPoint()
     }
 
     override fun getPointByUserIdForUpdate(userId: Long): Point {

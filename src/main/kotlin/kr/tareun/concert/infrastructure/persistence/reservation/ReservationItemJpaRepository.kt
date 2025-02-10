@@ -16,14 +16,14 @@ interface ReservationItemJpaRepository: JpaRepository<ReservationItemEntity, Lon
     @Query("""
         SELECT e FROM ReservationItemEntity e
         WHERE e.concertScheduleId = :scheduleId
-          AND (e.reservationStatus = :reservationStatus OR e.expiredAt < :expiredAt)
+          AND (e.reservationStatus = :reservationStatus OR e.expiredAt > :expiredAt)
     """)
     fun findAllByScheduleIdAndStatusOrExpiredAt(scheduleId: Long, reservationStatus: ReservationStatusType, expiredAt: LocalDateTime): List<ReservationItemEntity>
 
     @Query("""
         SELECT e FROM ReservationItemEntity e
         WHERE e.concertScheduleId = :scheduleId AND e.seatId IN :seatIds
-          AND (e.reservationStatus = :reservationStatus OR e.expiredAt < :expiredAt)
+          AND (e.reservationStatus = :reservationStatus OR e.expiredAt > :expiredAt)
     """)
     fun findAllByScheduleIdAndSeatIdAndStatusOrExpiredAt(scheduleId: Long, seatIds: List<Long>, reservationStatus: ReservationStatusType, expiredAt: LocalDateTime): List<ReservationItemEntity>
 

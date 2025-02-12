@@ -53,7 +53,7 @@ class ReservationServiceUnitTest {
         val seatList = listOf(1L, 2L)
         val schedule = ConcertSchedule(1, 1, 100_000, LocalDateTime.now().plusDays(1), 1, "공연장 1", 50, 48)
         val reserveCommand = ReserveCommand(1, 1, seatList)
-        val reservation = reserveCommand.toReservation(schedule)
+        val reservation = reserveCommand.toReservation()
         `when`(concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)).thenReturn(schedule)
         `when`(reservationRepository.saveReservation(reservation)).thenReturn(reservation)
 
@@ -71,8 +71,8 @@ class ReservationServiceUnitTest {
         val basePoint = 100_000
         val reservationId = 1L
         val point = Point(1, userId, basePoint)
-        val reservation = Reservation(reservationId, userId, 1, listOf(1), 10_000, ReservationStatusType.NON_PAID)
-        val paymentHistory = PaymentHistory(1, userId, reservationId, reservation.priceAmount)
+        val reservation = Reservation(reservationId, userId, 1, listOf(1), ReservationStatusType.NON_PAID)
+        val paymentHistory = PaymentHistory(1, userId, reservationId, 10_000)
         val tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
         val payRequest = PayCommand(userId, reservationId, tokenUuid)
         val queueToken = QueueToken(1, tokenUuid)

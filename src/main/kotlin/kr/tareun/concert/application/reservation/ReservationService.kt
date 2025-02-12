@@ -40,7 +40,7 @@ class ReservationService(
         schedule.addReservedCount(reserveCommand.seatIdList.size)
         concertRepository.saveConcertSchedule(schedule)
 
-        val newReservation = reserveCommand.toReservation(schedule)
+        val newReservation = reserveCommand.toReservation()
         val resultReservation = reservationRepository.saveReservation(newReservation)
 
         // 예약된 콘서트의 예약 횟수 캐시데이터 추가.
@@ -54,12 +54,15 @@ class ReservationService(
     fun payReservation(payCommand: PayCommand): PaymentHistoryResult {
         val point = paymentRepository.getPointByUserIdForUpdate(payCommand.userId)
         val reservation = reservationRepository.getReservationByIdForUpdate(payCommand.reservationId)
-        point.payPoint(reservation.priceAmount)
+        val schedule = concertRepository.getScheduleByScheduleId(reservation.concertScheduleId)
+        val priceAmount = schedule.ticketPrice * reservation.seatIds.size
+
+        point.payPoint(priceAmount)
 
         val paymentHistory = PaymentHistory(
             userId = payCommand.userId,
             reservationId = reservation.reservationId,
-            paidPoint = reservation.priceAmount
+            paidPoint = priceAmount
         )
         paymentRepository.savePoint(point)
 

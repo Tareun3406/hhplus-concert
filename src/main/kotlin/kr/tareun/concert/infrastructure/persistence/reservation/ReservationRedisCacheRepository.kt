@@ -3,7 +3,6 @@ package kr.tareun.concert.infrastructure.persistence.reservation
 import kr.tareun.concert.common.config.ReservationProperties
 import kr.tareun.concert.common.enums.RedisKeyType
 import kr.tareun.concert.common.util.DateCalculator
-import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ConcertCacheEntity
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Repository

@@ -6,7 +6,6 @@ import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.common.config.ReservationProperties
 import kr.tareun.concert.common.enums.RedisKeyType
 import kr.tareun.concert.common.util.DateCalculator
-import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ConcertCacheEntity
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach

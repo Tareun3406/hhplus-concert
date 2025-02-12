@@ -12,16 +12,12 @@ class ReservationEntity(
 
     @Column(nullable = false)
     var userId: Long,
-
-    @Column(nullable = false)
-    var priceAmount: Int,
 ) {
     companion object {
         fun from(reservation: Reservation): ReservationEntity {
             return ReservationEntity(
                 id = reservation.reservationId,
                 userId = reservation.userId,
-                priceAmount = reservation.priceAmount
             )
         }
     }
@@ -33,7 +29,6 @@ class ReservationEntity(
             userId = userId,
             concertScheduleId = itemRef.concertScheduleId,
             seatIds = reservationItemEntityList.map { it.seatId },
-            priceAmount = priceAmount,
             _reservationStatus = itemRef.reservationStatus
         )
     }

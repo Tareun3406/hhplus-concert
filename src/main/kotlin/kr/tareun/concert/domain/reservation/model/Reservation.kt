@@ -10,7 +10,6 @@ data class Reservation(
     val userId: Long,
     val concertScheduleId: Long,
     val seatIds: List<Long>,
-    val priceAmount: Int,
     private var _reservationStatus: ReservationStatusType,
 ) {
     val reservationStatus: ReservationStatusType

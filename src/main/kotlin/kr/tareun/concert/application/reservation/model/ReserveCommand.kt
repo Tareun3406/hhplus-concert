@@ -19,12 +19,11 @@ data class ReserveCommand(
             )
         }
     }
-    fun toReservation(scheduleInfo: ConcertSchedule): Reservation {
+    fun toReservation(): Reservation {
         return Reservation(
             userId = userId,
             concertScheduleId = concertScheduleId,
             seatIds = seatIdList,
-            priceAmount = scheduleInfo.ticketPrice * seatIdList.size,
             _reservationStatus = ReservationStatusType.NON_PAID
         )
     }

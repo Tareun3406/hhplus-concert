@@ -17,7 +17,6 @@ class ReservationUnitTest {
             userId = 1,
             concertScheduleId = 1,
             seatIds = listOf(1, 2),
-            priceAmount = 20_000,
             _reservationStatus = ReservationStatusType.NON_PAID
         )
 
@@ -36,7 +35,6 @@ class ReservationUnitTest {
             userId = 1,
             concertScheduleId = 1,
             seatIds = listOf(1, 2),
-            priceAmount = 20_000,
             _reservationStatus = ReservationStatusType.PAID
         )
 

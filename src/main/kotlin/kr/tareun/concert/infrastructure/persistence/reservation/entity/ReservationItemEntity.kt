@@ -8,6 +8,9 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 @Table(name = "reservation_item")
+// 인덱스 1: concertScheduleId, reservationStatus, expiredAt  (예약이 불가능한 좌석 조회. status 가 결제 완료 상태이거나 예약 결제 유효시간이 남은 경우)
+// 인덱스 2: concertScheduleId, seatId, reservationStatus, expiredAt (해당 좌석이 예약된 주문이 있는지 확인)
+// 인덱스 3: reservationID
 @Entity
 class ReservationItemEntity(
     @Id

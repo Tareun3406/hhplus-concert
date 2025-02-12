@@ -5,6 +5,7 @@ import kr.tareun.concert.application.payment.model.PaymentHistoryResult
 import kr.tareun.concert.application.reservation.model.ReservationRankedConcertResult
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.application.reservation.model.ReservationResult
+import kr.tareun.concert.application.reservation.model.ReservedConcertEvent
 import kr.tareun.concert.common.aop.annotaion.RedisLock
 import kr.tareun.concert.common.config.ReservationProperties
 import kr.tareun.concert.common.exception.CommonException
@@ -14,6 +15,7 @@ import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory
 import kr.tareun.concert.domain.queue.QueueRepository
 import kr.tareun.concert.domain.reservation.ReservationRepository
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -26,6 +28,8 @@ class ReservationService(
     private val queueRepository: QueueRepository,
 
     private val reservationProperties: ReservationProperties,
+
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
     @Transactional
     @RedisLock(prefix = "'scheduleSeat:' + #reserveCommand.concertScheduleId + '-'", variableKeys = ["#reserveCommand.seatIdList"], ttlSec = 5)
@@ -35,18 +39,10 @@ class ReservationService(
         if (existReservedList.isNotEmpty()) {
             throw CommonException(ErrorCode.RESERVATION_SEAT_ALREADY_TAKEN)
         }
-
-        val schedule = concertRepository.getScheduleByScheduleId(reserveCommand.concertScheduleId)
-        schedule.addReservedCount(reserveCommand.seatIdList.size)
-        concertRepository.saveConcertSchedule(schedule)
-
         val newReservation = reserveCommand.toReservation()
         val resultReservation = reservationRepository.saveReservation(newReservation)
 
-        // 예약된 콘서트의 예약 횟수 캐시데이터 추가.
-        val concert = concertRepository.getConcertById(schedule.concertId)
-        reservationRepository.incrementCacheReservationCount(concert)
-
+        applicationEventPublisher.publishEvent(ReservedConcertEvent.from(resultReservation))
         return ReservationResult.from(resultReservation)
     }
 

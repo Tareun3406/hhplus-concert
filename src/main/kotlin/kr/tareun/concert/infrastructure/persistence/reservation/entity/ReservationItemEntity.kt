@@ -8,6 +8,11 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 @Table(name = "reservation_item")
+// 조회 1: concertScheduleId, reservationStatus, expiredAt  (예약이 불가능한 좌석 리스트 조회. status 가 결제 완료 상태이거나 예약 유효시간이 남은 경우) -> 2번조회 인덱스 사용
+// 조회 2: concertScheduleId, seatId, reservationStatus, expiredAt (예약 하기 전 이미 해당 좌석에 유요한 예약이 있는지 확인, 1번 조회에서도 같이 쓸 수 있도록 조회 조건 수정),
+//          -> concertScheduleId, reservationStatus, expiredAt, seatId
+// 조회 3: reservationID 외래키
+// 조회 4: 외래키 concertScheduleId 는 필요하지 않음. (2번 조회 인덱스 활용 가능)
 @Entity
 class ReservationItemEntity(
     @Id

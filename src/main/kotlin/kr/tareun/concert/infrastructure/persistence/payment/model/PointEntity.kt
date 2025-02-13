@@ -11,7 +11,7 @@ class PointEntity(
     var id: Long = 0,
 
     @Column(nullable = false)
-    var userId : Long,
+    var userId : Long, // index 추가
 
     @Column(nullable = false)
     var point : Int,

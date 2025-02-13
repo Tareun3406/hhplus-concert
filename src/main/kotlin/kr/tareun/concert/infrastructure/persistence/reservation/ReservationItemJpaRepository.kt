@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 @Repository
+
 interface ReservationItemJpaRepository: JpaRepository<ReservationItemEntity, Long> {
     fun findAllByReservationId(reservationId: Long): List<ReservationItemEntity>
 
@@ -22,8 +23,9 @@ interface ReservationItemJpaRepository: JpaRepository<ReservationItemEntity, Lon
 
     @Query("""
         SELECT e FROM ReservationItemEntity e
-        WHERE e.concertScheduleId = :scheduleId AND e.seatId IN :seatIds
+        WHERE e.concertScheduleId = :scheduleId
           AND (e.reservationStatus = :reservationStatus OR e.expiredAt > :expiredAt)
+          AND e.seatId IN :seatIds
     """)
     fun findAllByScheduleIdAndSeatIdAndStatusOrExpiredAt(scheduleId: Long, seatIds: List<Long>, reservationStatus: ReservationStatusType, expiredAt: LocalDateTime): List<ReservationItemEntity>
 

@@ -6,3 +6,4 @@
 ### [캐시 적용](/docs/cache.md)
 ### [대기열 토큰 Redis 사용](/docs/queue.md)
 ### [인덱스 추가 및 성능 비교](/docs/index.md)
+### [MSA로의 전환시 트랜잭션 처리의 한계와 해결방안](/docs/index.md)

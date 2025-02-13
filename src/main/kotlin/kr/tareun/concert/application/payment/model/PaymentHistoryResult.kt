@@ -1,11 +1,13 @@
 package kr.tareun.concert.application.payment.model
 
+import kr.tareun.concert.common.enums.PayOrderType
 import kr.tareun.concert.domain.payment.model.PaymentHistory
 
 data class PaymentHistoryResult(
     var historyId: Long = 0,
     var userId: Long,
-    var reservationId: Long,
+    var orderType: PayOrderType,
+    var orderId: Long,
     var paidPoint: Int,
 ) {
     companion object {
@@ -13,7 +15,8 @@ data class PaymentHistoryResult(
             return PaymentHistoryResult(
                 historyId = paymentHistory.historyId,
                 userId = paymentHistory.userId,
-                reservationId = paymentHistory.reservationId,
+                orderType = paymentHistory.orderType,
+                orderId = paymentHistory.orderId,
                 paidPoint = paymentHistory.paidPoint
             )
         }

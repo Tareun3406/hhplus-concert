@@ -25,7 +25,7 @@ class PaymentService(
     }
 
     @Transactional
-    fun payPoint(payCommand: PayCommand) {
+    fun payPoint(payCommand: PayCommand): PaymentHistoryResult {
         val point = paymentRepository.getPointByUserIdForUpdate(payCommand.userId)
 
         point.payPoint(payCommand.amount)
@@ -39,5 +39,6 @@ class PaymentService(
         paymentRepository.savePoint(point)
 
         applicationEventPublisher.publishEvent(PaySuccessEvent.from(paymentHistory))
+        return PaymentHistoryResult.from(paymentHistory)
     }
 }

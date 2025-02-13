@@ -11,11 +11,15 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.springframework.context.ApplicationEventPublisher
 
 @Suppress("NonAsciiCharacters")
 class PaymentServiceUnitTest {
     @Mock
     private lateinit var paymentRepository: PaymentRepository
+
+    @Mock
+    private lateinit var applicationEventPublisher: ApplicationEventPublisher
 
     @InjectMocks
     private lateinit var paymentService: PaymentService

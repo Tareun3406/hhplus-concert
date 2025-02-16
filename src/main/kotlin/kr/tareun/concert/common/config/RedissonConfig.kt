@@ -1,5 +1,6 @@
 package kr.tareun.concert.common.config
 
+import kr.tareun.concert.common.config.properties.RedisProperties
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
 import org.redisson.config.Config

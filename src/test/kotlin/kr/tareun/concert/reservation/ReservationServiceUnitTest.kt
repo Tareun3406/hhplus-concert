@@ -1,19 +1,13 @@
 package kr.tareun.concert.reservation
 
-import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
-import kr.tareun.concert.common.config.ReservationProperties
+import kr.tareun.concert.common.config.properties.ReservationProperties
 import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.concert.model.ConcertSchedule
 import kr.tareun.concert.domain.payment.PaymentRepository
-import kr.tareun.concert.domain.payment.model.PaymentHistory
-import kr.tareun.concert.domain.payment.model.Point
 import kr.tareun.concert.domain.queue.QueueRepository
-import kr.tareun.concert.domain.queue.model.QueueToken
 import kr.tareun.concert.domain.reservation.ReservationRepository
-import kr.tareun.concert.domain.reservation.model.Reservation
-import kr.tareun.concert.common.enums.ReservationStatusType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,11 +15,8 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
 import org.springframework.context.ApplicationEventPublisher
 import java.time.LocalDateTime
-import java.util.*
 
 @Suppress("NonAsciiCharacters")
 class ReservationServiceUnitTest {

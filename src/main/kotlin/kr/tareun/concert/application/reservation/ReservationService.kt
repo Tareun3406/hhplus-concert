@@ -3,7 +3,7 @@ package kr.tareun.concert.application.reservation
 import kr.tareun.concert.application.queue.model.QueueOrderExpireEvent
 import kr.tareun.concert.application.reservation.model.*
 import kr.tareun.concert.common.aop.annotaion.RedisLock
-import kr.tareun.concert.common.config.ReservationProperties
+import kr.tareun.concert.common.config.properties.ReservationProperties
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.domain.concert.model.Concert

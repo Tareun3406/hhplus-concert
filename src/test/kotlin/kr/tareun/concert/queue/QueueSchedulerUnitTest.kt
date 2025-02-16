@@ -2,7 +2,7 @@ package kr.tareun.concert.queue
 
 import kr.tareun.concert.application.queue.QueueTokenScheduler
 import kr.tareun.concert.domain.queue.QueueRepository
-import kr.tareun.concert.common.config.QueueProperties
+import kr.tareun.concert.common.config.properties.QueueProperties
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock

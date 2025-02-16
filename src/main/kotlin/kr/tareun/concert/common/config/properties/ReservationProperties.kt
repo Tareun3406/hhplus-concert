@@ -1,4 +1,4 @@
-package kr.tareun.concert.common.config
+package kr.tareun.concert.common.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

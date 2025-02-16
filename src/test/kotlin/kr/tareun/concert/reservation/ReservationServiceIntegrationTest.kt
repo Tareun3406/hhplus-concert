@@ -1,9 +1,8 @@
 package kr.tareun.concert.reservation
 
-import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
-import kr.tareun.concert.common.config.ReservationProperties
+import kr.tareun.concert.common.config.properties.ReservationProperties
 import kr.tareun.concert.common.enums.RedisKeyType
 import kr.tareun.concert.common.util.DateCalculator
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ConcertCacheEntity
@@ -18,7 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
 import java.time.LocalDateTime
-import java.util.*
 import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")

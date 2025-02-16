@@ -4,7 +4,7 @@ import kr.tareun.concert.domain.reservation.ReservationRepository
 import kr.tareun.concert.domain.reservation.model.Reservation
 import kr.tareun.concert.domain.reservation.model.ReservationItem
 import kr.tareun.concert.common.enums.ReservationStatusType
-import kr.tareun.concert.common.config.ConcertProperties
+import kr.tareun.concert.common.config.properties.ConcertProperties
 import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ConcertCacheEntity
 import kr.tareun.concert.infrastructure.persistence.reservation.entity.ReservationEntity

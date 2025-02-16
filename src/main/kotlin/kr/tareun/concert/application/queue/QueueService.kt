@@ -21,4 +21,11 @@ class QueueService(
         val token = queueRepository.retrieveQueueToken(uuid) ?: throw CommonException(ErrorCode.QUEUE_TOKEN_EXPIRED)
         return QueueTokenResult.from(token)
     }
+
+    fun expireQueue(uuid: UUID) {
+        queueRepository.removeActivatedQueueToken(uuid)
+    }
+    fun expireQueue(userId: Long){
+        // todo userId 로 토큰 조회
+    }
 }

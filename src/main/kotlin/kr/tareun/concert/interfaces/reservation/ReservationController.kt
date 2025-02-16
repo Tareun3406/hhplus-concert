@@ -28,14 +28,15 @@ class ReservationController(
         )
     }
 
-    @PostMapping("/pay")
-    fun payReservedConcert(@RequestBody payRequest: PayRequest, @RequestHeader("Queue-Token") tokenUuid: UUID): Response<PaymentHistoryResponse> {
-        val command = PayCommand.from(payRequest, tokenUuid)
-        return Response(
-            ResponseResultType.SUCCESS,
-            PaymentHistoryResponse.from(reservationService.payReservation(command))
-        )
-    }
+    // fixme 예약 - 결제 플로우가 이벤트로 연결됨.
+//    @PostMapping("/pay")
+//    fun payReservedConcert(@RequestBody payRequest: PayRequest, @RequestHeader("Queue-Token") tokenUuid: UUID): Response<PaymentHistoryResponse> {
+//        val command = PayCommand.from(payRequest, tokenUuid)
+//        return Response(
+//            ResponseResultType.SUCCESS,
+//            PaymentHistoryResponse.from(reservationService.payReservation(command))
+//        )
+//    }
 
     @GetMapping("/rankedConcerts")
     fun getRankedConcerts(@RequestParam rankingSize: Int): Response<List<ReservationRankedConcertResponse>> {

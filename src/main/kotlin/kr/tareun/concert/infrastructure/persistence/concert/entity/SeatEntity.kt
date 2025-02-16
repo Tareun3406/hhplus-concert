@@ -11,7 +11,7 @@ class SeatEntity (
     var id: Long = 0,
 
     @Column(nullable = false)
-    var locationId : Long,
+    var locationId : Long, // index 추가
 
     @Column(nullable = false)
     var seatNumber: Int,

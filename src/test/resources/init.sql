@@ -12,7 +12,6 @@ CREATE TABLE reservation
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
     user_id      BIGINT                NOT NULL,
-    price_amount INT                   NOT NULL,
     CONSTRAINT pk_reservation PRIMARY KEY (id)
 );
 
@@ -104,7 +103,7 @@ insert into concert value (1, '1번 콘서트', '가수 1');
 insert into concert_schedule value (1, 1, 1000, TIMESTAMP('20990201'), 1, 1);
 insert into location value (1, '장소 1', 4);
 insert into seat values (1, 1, 1),(2, 1, 2),(3, 1, 3),(4, 1, 4);
-insert into reservation value (1, 1, 1);
+insert into reservation value (1, 1);
 insert into reservation_item value (1, 1, 1, 1, 'NON_PAID', NOW());
 
 insert into queue_token value (1, '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d', 'PENDING', null);

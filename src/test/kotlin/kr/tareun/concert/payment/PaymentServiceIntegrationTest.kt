@@ -3,6 +3,8 @@ package kr.tareun.concert.payment
 import kr.tareun.concert.TestcontainersConfiguration
 import kr.tareun.concert.application.payment.PaymentService
 import kr.tareun.concert.application.payment.model.ChargeCommand
+import kr.tareun.concert.application.payment.model.PayCommand
+import kr.tareun.concert.common.enums.PayOrderType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,6 +15,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
+import java.util.*
 import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")
@@ -55,6 +58,16 @@ class PaymentServiceIntegrationTest {
 
         // when - then
         Assertions.assertEquals(userId, paymentService.chargePoint(chargeCommand).userId)
+    }
+
+    @Test
+    fun `잔액을 사용할 수 있다`() {
+        // given
+        val userId = 1L
+        val payCommand = PayCommand(userId, 10_000, PayOrderType.CONCERT, 1)
+
+        // when - then
+        Assertions.assertEquals(userId, paymentService.payPoint(payCommand).userId)
     }
 
     @Test

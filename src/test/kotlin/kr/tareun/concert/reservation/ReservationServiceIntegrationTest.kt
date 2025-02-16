@@ -59,18 +59,6 @@ class ReservationServiceIntegrationTest {
     }
 
     @Test
-    fun `예약한 좌석을 결제할 수 있다`() {
-        // given
-        val userId = 1L
-        val reservationId = 1L
-        val tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d")
-        val reserveCommand = PayCommand(userId, reservationId, tokenUuid)
-
-        // when - then
-        Assertions.assertEquals(userId, reservationService.payReservation(reserveCommand).userId)
-    }
-
-    @Test
     fun `하나의 좌석에 대해 여러번 예약 요청이 들어왔을 경우 하나만 성공한다`() {
         // given
         val reserveCommand = ReserveCommand(1, 1, listOf(4L))
@@ -93,28 +81,28 @@ class ReservationServiceIntegrationTest {
         Assertions.assertEquals(1, successfulReservations)
     }
 
-    @Test
-    fun `하나의 예약에 대해 여러번 결제 요청이 들어왔을 경우 하나만 성공한다`() {
-        // given
-        val payCommand = PayCommand(userId = 1, reservationId = 1, tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"))
-
-        // when
-        val futures = (1..10).map {
-            CompletableFuture.supplyAsync {
-                try {
-                    reservationService.payReservation(payCommand)
-                    true
-                } catch (e: Exception) {
-                    false
-                }
-            }
-        }
-        val results = futures.map { it.join() }
-
-        // then
-        val successfulReservations = results.count { it }
-        Assertions.assertEquals(1, successfulReservations)
-    }
+//    @Test
+//    fun `하나의 예약에 대해 여러번 결제 요청이 들어왔을 경우 하나만 성공한다`() {
+//        // given
+//        val payCommand = PayCommand(userId = 1, reservationId = 1, tokenUuid = UUID.fromString("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"))
+//
+//        // when
+//        val futures = (1..10).map {
+//            CompletableFuture.supplyAsync {
+//                try {
+//                    reservationService.payReservation(payCommand)
+//                    true
+//                } catch (e: Exception) {
+//                    false
+//                }
+//            }
+//        }
+//        val results = futures.map { it.join() }
+//
+//        // then
+//        val successfulReservations = results.count { it }
+//        Assertions.assertEquals(1, successfulReservations)
+//    }
 
     @Test
     fun `콘서트의 예약이 많은 순위를 조회할 수 있다`() {

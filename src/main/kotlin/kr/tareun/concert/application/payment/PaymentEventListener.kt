@@ -3,9 +3,8 @@ package kr.tareun.concert.application.payment
 import kr.tareun.concert.application.payment.model.OrderPayEvent
 import kr.tareun.concert.application.payment.model.PayCommand
 import org.slf4j.LoggerFactory
+import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
-import org.springframework.transaction.event.TransactionPhase
-import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
 class PaymentEventListener(
@@ -13,7 +12,7 @@ class PaymentEventListener(
 ) {
     private val logger = LoggerFactory.getLogger(PaymentEventListener::class.java)
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @KafkaListener(topics = ["payment.pay.request"], groupId = "payment.pay.request.consumer")
     fun handlePaymentEvent(orderPayEvent: OrderPayEvent) {
         try {
             paymentService.payPoint(PayCommand.from(orderPayEvent))

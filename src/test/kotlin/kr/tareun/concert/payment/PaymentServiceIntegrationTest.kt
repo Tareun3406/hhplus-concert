@@ -1,6 +1,5 @@
 package kr.tareun.concert.payment
 
-import kr.tareun.concert.TestcontainersConfiguration
 import kr.tareun.concert.application.payment.PaymentService
 import kr.tareun.concert.application.payment.model.ChargeCommand
 import kr.tareun.concert.application.payment.model.PayCommand
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
 import org.springframework.core.io.ClassPathResource
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
@@ -18,7 +16,6 @@ import java.sql.SQLException
 import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")
-@Import(TestcontainersConfiguration::class)
 @SpringBootTest
 class PaymentServiceIntegrationTest {
     @Autowired

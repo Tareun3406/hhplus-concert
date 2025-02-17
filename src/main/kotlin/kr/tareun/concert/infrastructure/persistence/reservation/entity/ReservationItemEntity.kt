@@ -32,7 +32,6 @@ class ReservationItemEntity(
     @Enumerated(EnumType.STRING)
     var reservationStatus : ReservationStatusType = ReservationStatusType.NON_PAID,
 
-    @CreationTimestamp
     @Column(nullable = false)
     var expiredAt : LocalDateTime
 ) {

@@ -1,17 +1,13 @@
 package kr.tareun.concert.interfaces.reservation
 
-import kr.tareun.concert.application.payment.model.PayCommand
 import kr.tareun.concert.application.reservation.ReservationService
 import kr.tareun.concert.application.reservation.model.ReserveCommand
 import kr.tareun.concert.interfaces.common.response.Response
 import kr.tareun.concert.common.enums.ResponseResultType
-import kr.tareun.concert.interfaces.payment.model.PayRequest
-import kr.tareun.concert.interfaces.payment.model.PaymentHistoryResponse
 import kr.tareun.concert.interfaces.reservation.model.ReservationRankedConcertResponse
 import kr.tareun.concert.interfaces.reservation.model.ReservationResponse
 import kr.tareun.concert.interfaces.reservation.model.ReserveRequest
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @RequestMapping("/reservation")
 @RestController

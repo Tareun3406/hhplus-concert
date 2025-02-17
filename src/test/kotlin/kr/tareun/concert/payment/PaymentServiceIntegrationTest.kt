@@ -15,7 +15,6 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.init.ScriptUtils
 import java.sql.SQLException
-import java.util.*
 import java.util.concurrent.CompletableFuture
 
 @Suppress("NonAsciiCharacters")

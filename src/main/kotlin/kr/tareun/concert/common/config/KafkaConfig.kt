@@ -10,23 +10,22 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.*
 import org.springframework.kafka.support.serializer.JsonDeserializer
-import org.springframework.kafka.support.serializer.JsonSerializer
 
 
 @Configuration
 class KafkaConfig(private val kafkaProperties: KafkaProperties) {
     @Bean
-    fun producerFactory(): ProducerFactory<String, Any> {
+    fun producerFactory(): ProducerFactory<String, String> {
         val props = hashMapOf<String, Any> (
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.bootstrapServers,
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to JsonSerializer::class.java,
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
         )
         return DefaultKafkaProducerFactory(props)
     }
 
     @Bean
-    fun kafkaTemplate(): KafkaTemplate<String, Any> {
+    fun kafkaTemplate(): KafkaTemplate<String, String> {
         return KafkaTemplate(producerFactory())
     }
 

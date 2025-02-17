@@ -1,11 +1,15 @@
 package kr.tareun.concert.application.reservation
 
+import kr.tareun.concert.application.concert.model.ConcertPublishPayEventCommand
+import kr.tareun.concert.application.payment.model.OrderPayEvent
 import kr.tareun.concert.application.queue.model.QueueOrderExpireEvent
 import kr.tareun.concert.application.reservation.model.*
 import kr.tareun.concert.common.aop.annotaion.RedisLock
 import kr.tareun.concert.common.config.properties.ReservationProperties
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.common.enums.ErrorCode
+import kr.tareun.concert.common.enums.PayOrderType
+import kr.tareun.concert.domain.concert.ConcertRepository
 import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import org.springframework.context.ApplicationEventPublisher
@@ -17,6 +21,7 @@ import java.time.LocalDateTime
 class ReservationService(
     private val reservationRepository: ReservationRepository,
     private val reservationProperties: ReservationProperties,
+    private val concertRepository: ConcertRepository,
 
     private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
@@ -36,6 +41,21 @@ class ReservationService(
         // 예약 완료 이벤트 발행
         applicationEventPublisher.publishEvent(ReservedConcertEvent.from(resultReservation))
         return ReservationResult.from(resultReservation)
+    }
+
+    @Transactional
+    fun publishPayOrderEvent(concertPublishPayEventCommand: ConcertPublishPayEventCommand) {
+        val schedule = concertRepository.getScheduleByScheduleId(concertPublishPayEventCommand.concertScheduleId)
+
+        val orderPayEvent = OrderPayEvent(
+            userid = concertPublishPayEventCommand.userId,
+            amount = schedule.ticketPrice * concertPublishPayEventCommand.seats.size,
+            orderType = PayOrderType.CONCERT,
+            orderId = concertPublishPayEventCommand.reservationId
+        )
+
+        // 결제 요청 이벤트 발행
+        applicationEventPublisher.publishEvent(orderPayEvent)
     }
 
     @Transactional

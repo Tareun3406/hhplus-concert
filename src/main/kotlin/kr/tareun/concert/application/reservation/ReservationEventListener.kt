@@ -1,8 +1,10 @@
 package kr.tareun.concert.application.reservation
 
+import kr.tareun.concert.application.concert.model.ConcertPublishPayEventCommand
 import kr.tareun.concert.application.payment.model.PaySuccessEvent
 import kr.tareun.concert.application.reservation.model.RequestedReserveConcertEvent
 import kr.tareun.concert.application.reservation.model.ReservationSuccessStatusCommand
+import kr.tareun.concert.application.reservation.model.ReservedConcertEvent
 import kr.tareun.concert.common.enums.PayOrderType
 import org.slf4j.LoggerFactory
 import org.springframework.context.event.EventListener
@@ -16,6 +18,15 @@ class ReservationEventListener(
     private val reservationService: ReservationService,
 ) {
     private val logger = LoggerFactory.getLogger(ReservationEventListener::class.java)
+
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    fun handlePublishPayOrderEvent(reservedConcertEvent: ReservedConcertEvent) {
+        try {
+            reservationService.publishPayOrderEvent(ConcertPublishPayEventCommand.from(reservedConcertEvent))
+        } catch (e: Exception) {
+            logger.error("결제 요청 실패", e)
+        }
+    }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun handlePaidReservation(paySuccessEvent: PaySuccessEvent){

@@ -24,13 +24,4 @@ class ConcertEventListener(
             logger.error("예약 횟수 캐시 저장 실패", e)
         }
     }
-
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    fun handlePublishPayOrderEvent(reservedConcertEvent: ReservedConcertEvent) {
-        try {
-            concertService.publishPayOrderEvent(ConcertPublishPayEventCommand.from(reservedConcertEvent))
-        } catch (e: Exception) {
-            logger.error("결제 요청 실패", e)
-        }
-    }
 }

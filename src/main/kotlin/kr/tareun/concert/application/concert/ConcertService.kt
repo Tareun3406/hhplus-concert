@@ -42,19 +42,4 @@ class ConcertService(
         val concert = concertRepository.getConcertById(concertSchedule.concertId)
         applicationEventPublisher.publishEvent(RequestedReserveConcertEvent(concert))
     }
-
-    @Transactional
-    fun publishPayOrderEvent(concertPublishPayEventCommand: ConcertPublishPayEventCommand) {
-        val schedule = concertRepository.getScheduleByScheduleId(concertPublishPayEventCommand.concertScheduleId)
-
-        val orderPayEvent = OrderPayEvent(
-            userid = concertPublishPayEventCommand.userId,
-            amount = schedule.ticketPrice * concertPublishPayEventCommand.seats.size,
-            orderType = PayOrderType.CONCERT,
-            orderId = concertPublishPayEventCommand.reservationId
-        )
-
-        // 결제 요청 이벤트 발행
-        applicationEventPublisher.publishEvent(orderPayEvent)
-    }
 }

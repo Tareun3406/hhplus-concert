@@ -1,14 +1,18 @@
 package kr.tareun.concert.infrastructure.persistence.message
 
+import kr.tareun.concert.common.config.properties.AppProperties
+import kr.tareun.concert.common.enums.MessageStatus
 import kr.tareun.concert.domain.message.OutboxMessageRepository
 import kr.tareun.concert.domain.message.model.OutboxMessage
 import kr.tareun.concert.infrastructure.persistence.message.entity.OutboxMessageEntity
 import org.springframework.kafka.support.serializer.JsonSerializer
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class OutboxMessageRepositoryImpl(
     private val outboxMessageJpaRepository: OutboxMessageJpaRepository,
+    private val appProperties: AppProperties
 ): OutboxMessageRepository {
     override fun saveOutboxMessage(outboxMessage: OutboxMessage<*>): OutboxMessage<String> {
         val serializer = JsonSerializer<Any>() // JSON 직렬화 하여 DB 저장. Kafka 의 Serializer 사용.
@@ -31,5 +35,11 @@ class OutboxMessageRepositoryImpl(
 
     override fun getOutboxMessageById(id: Long): OutboxMessage<String> {
         return outboxMessageJpaRepository.getReferenceById(id).toOutboxMessage()
+    }
+
+    override fun retrieveOutboxListToNeedRetry(): List<OutboxMessage<String>> {
+        val beforeTime = LocalDateTime.now().minusMinutes(appProperties.messageRetryDelayMinute)
+        return outboxMessageJpaRepository.findAllByStatusAndCreatedAtBefore(MessageStatus.PENDING, beforeTime)
+            .map { it.toOutboxMessage() }
     }
 }

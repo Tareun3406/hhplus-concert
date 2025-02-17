@@ -1,6 +1,7 @@
 package kr.tareun.concert.application.payment
 
 import kr.tareun.concert.application.payment.model.*
+import kr.tareun.concert.common.aop.annotaion.OutboxEvent
 import kr.tareun.concert.domain.payment.PaymentRepository
 import kr.tareun.concert.domain.payment.model.PaymentHistory
 import org.springframework.context.ApplicationEventPublisher
@@ -24,8 +25,9 @@ class PaymentService(
         return PointResult.from(paymentRepository.savePoint(point))
     }
 
+    @OutboxEvent("payment.pay.success")
     @Transactional
-    fun payPoint(payCommand: PayCommand): PaymentHistoryResult {
+    fun payPoint(payCommand: PayCommand): PaySuccessEvent {
         val point = paymentRepository.getPointByUserIdForUpdate(payCommand.userId)
 
         point.payPoint(payCommand.amount)
@@ -38,7 +40,6 @@ class PaymentService(
         )
         paymentRepository.savePoint(point)
 
-        applicationEventPublisher.publishEvent(PaySuccessEvent.from(paymentHistory))
-        return PaymentHistoryResult.from(paymentHistory)
+        return PaySuccessEvent.from(paymentHistory)
     }
 }

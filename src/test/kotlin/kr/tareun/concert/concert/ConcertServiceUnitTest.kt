@@ -15,7 +15,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.springframework.context.ApplicationEventPublisher
 import java.time.LocalDateTime
 
 @Suppress("NonAsciiCharacters")
@@ -25,9 +24,6 @@ class ConcertServiceUnitTest {
 
     @Mock
     private lateinit var concertRepository: ConcertRepository
-
-    @Mock
-    private lateinit var applicationEventPublisher: ApplicationEventPublisher
 
     @InjectMocks
     private lateinit var concertService: ConcertService

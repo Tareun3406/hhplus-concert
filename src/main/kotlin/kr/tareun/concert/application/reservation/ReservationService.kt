@@ -10,7 +10,6 @@ import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.common.enums.ErrorCode
 import kr.tareun.concert.common.enums.PayOrderType
 import kr.tareun.concert.domain.concert.ConcertRepository
-import kr.tareun.concert.domain.concert.model.Concert
 import kr.tareun.concert.domain.reservation.ReservationRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -69,7 +68,9 @@ class ReservationService(
     }
 
     @Transactional
-    fun increaseConcertReservationCount(concert: Concert) {
+    fun increaseConcertReservationCount(reservedConcertEvent: ReservedConcertEvent) {
+        val schedule = concertRepository.getScheduleByScheduleId(reservedConcertEvent.concertScheduleId)
+        val concert = concertRepository.getConcertById(schedule.concertId)
         reservationRepository.incrementCacheReservationCount(concert)
     }
 

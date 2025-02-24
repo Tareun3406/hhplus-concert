@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component
 class RedisProperties {
     var host = "localhost"
     var port = 6379
+    var password = ""
 }

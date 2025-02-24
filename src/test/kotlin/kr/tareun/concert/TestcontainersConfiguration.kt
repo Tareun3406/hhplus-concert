@@ -1,11 +1,13 @@
 package kr.tareun.concert
 
+import kr.tareun.concert.common.config.properties.KafkaProperties
 import kr.tareun.concert.common.config.properties.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.MariaDBContainer
+import org.testcontainers.kafka.ConfluentKafkaContainer
 import org.testcontainers.utility.DockerImageName
 import javax.sql.DataSource
 
@@ -43,5 +45,20 @@ class TestcontainersConfiguration {
 		redisProperties.host = redisContainer.host
 		redisProperties.port = redisContainer.getMappedPort(6379)
 		return redisProperties
+	}
+
+	@Bean
+	fun kafkaContainer(): ConfluentKafkaContainer {
+		val kafkaContainer = ConfluentKafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"))
+		kafkaContainer.portBindings = listOf("9092:9092")
+		kafkaContainer.apply { start() }
+		return kafkaContainer
+	}
+
+	@Bean
+	fun kafkaTestProperties(kafkaContainer: ConfluentKafkaContainer): KafkaProperties {
+		val kafkaProperties = KafkaProperties()
+		kafkaProperties.bootstrapServers = kafkaContainer.bootstrapServers
+		return kafkaProperties
 	}
 }

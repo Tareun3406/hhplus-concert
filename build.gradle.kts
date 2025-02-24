@@ -37,8 +37,12 @@ dependencies {
 	//swagger
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 
-	// lock
+	// redis
 	implementation("org.redisson:redisson-spring-boot-starter:3.43.0")
+
+	// kafka
+	implementation("org.springframework.kafka:spring-kafka")
+	testImplementation("org.testcontainers:kafka")
 }
 
 kotlin {

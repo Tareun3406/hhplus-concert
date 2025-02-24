@@ -96,6 +96,19 @@ CREATE TABLE seat
     CONSTRAINT pk_seat PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS outbox_message;
+CREATE TABLE outbox_message
+(
+    id          BIGINT AUTO_INCREMENT NOT NULL,
+    topic       VARCHAR(255)          NOT NULL,
+    message     VARCHAR(255)          NOT NULL,
+    broker_type VARCHAR(255)          NOT NULL,
+    status      VARCHAR(255)          NOT NULL,
+    created_at  TIMESTAMP             NOT NULL,
+    CONSTRAINT pk_outbox_message PRIMARY KEY (id)
+);
+
+
 
 insert into user(id, email, name) value (1, 'abc@test.com', 'name');
 insert into point(id, user_id, point) value(1, 1, 10000);

@@ -2,10 +2,9 @@ package kr.tareun.concert.application.queue
 
 import kr.tareun.concert.application.queue.model.QueueOrderExpireEvent
 import org.slf4j.LoggerFactory
+import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
-import org.springframework.transaction.event.TransactionPhase
-import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
 class QueueEventListener(
@@ -14,7 +13,7 @@ class QueueEventListener(
     private val logger = LoggerFactory.getLogger(QueueEventListener::class.java)
 
     @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @KafkaListener(topics = ["queue.expire.request"], groupId = "queue.expire.request.consumer",)
     fun handleExpireEvent(queueOrderExpireEvent: QueueOrderExpireEvent) {
         try {
             queueService.expireQueue(queueOrderExpireEvent.userId)

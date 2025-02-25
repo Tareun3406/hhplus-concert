@@ -126,14 +126,14 @@ FROM (
          SELECT n FROM numbers
      ) AS t;
 
-## 장소 100000 개
+## 장소 10000 개
 INSERT INTO location (id, name, location_capacity)
 SELECT n, CONCAT('장소 ', n), 50
 FROM (
          WITH RECURSIVE numbers AS (
              SELECT 1 AS n
              UNION ALL
-             SELECT n + 1 FROM numbers WHERE n < 100000
+             SELECT n + 1 FROM numbers WHERE n < 10000
          )
          SELECT n FROM numbers
      ) AS t;

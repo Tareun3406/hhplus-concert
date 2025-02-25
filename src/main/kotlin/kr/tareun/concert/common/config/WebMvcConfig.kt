@@ -11,7 +11,7 @@ class WebMvcConfig(
 ): WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(queueTokenInterceptor)
-            .addPathPatterns("/concerts")
+//        registry.addInterceptor(queueTokenInterceptor)
+//            .addPathPatterns("/concerts")
     }
 }

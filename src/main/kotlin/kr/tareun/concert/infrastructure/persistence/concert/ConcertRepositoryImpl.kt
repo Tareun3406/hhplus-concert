@@ -33,7 +33,7 @@ class ConcertRepositoryImpl(
     }
 
     override fun getConcertScheduleListByConcertId(concertId: Long): List<ConcertSchedule> {
-        return concertScheduleJpaRepository.findAllSchedule()
+        return concertScheduleJpaRepository.findAllSchedule(concertId)
     }
 
     override fun getScheduleByScheduleId(scheduleId: Long): ConcertSchedule {

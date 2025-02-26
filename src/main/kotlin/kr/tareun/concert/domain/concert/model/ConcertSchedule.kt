@@ -5,8 +5,8 @@ import kr.tareun.concert.common.exception.CommonException
 import java.time.LocalDateTime
 
 data class ConcertSchedule(
-    val concertId: Long = 0,
-    val scheduleId: Long,
+    val scheduleId: Long = 0,
+    val concertId: Long,
     val ticketPrice: Int,
     val scheduledDate: LocalDateTime,
     val locationId: Long,

@@ -21,6 +21,7 @@ interface ConcertScheduleJpaRepository: JpaRepository<ConcertScheduleEntity, Lon
         )
         FROM ConcertScheduleEntity cs
         JOIN LocationEntity l ON cs.locationId = l.id
+        WHERE cs.concertId = :concertId
     """)
-    fun findAllSchedule(): List<ConcertSchedule>
+    fun findAllSchedule(concertId: Long): List<ConcertSchedule>
 }

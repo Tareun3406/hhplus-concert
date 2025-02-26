@@ -34,7 +34,6 @@ class ReservationEventListener(
         }
     }
 
-    @Async
     @KafkaListener(topics = ["payment.pay.success"], groupId = "reservation.status.update")
     fun handlePaidReservation(paySuccessEvent: PaySuccessEvent){
         try {

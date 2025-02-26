@@ -26,8 +26,7 @@ class OutboxMessageDomainService(
         return outboxMessageRepository.saveOutboxMessage(outboxMessage)
     }
 
-    @Async
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun publishMessageAndUpdateStatus(outboxMessage: OutboxMessage<String>) {
         when(outboxMessage.brokerType) {
             BrokerType.MOCK -> messagePublisher.publishMock(outboxMessage)

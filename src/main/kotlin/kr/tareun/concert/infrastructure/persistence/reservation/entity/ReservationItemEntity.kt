@@ -36,10 +36,10 @@ class ReservationItemEntity(
     var expiredAt : LocalDateTime
 ) {
     companion object {
-        fun createNewReservationItems(reservation: Reservation, expiredAt: LocalDateTime): List<ReservationItemEntity> {
+        fun createNewReservationItems(reservation: Reservation, reservationId: Long, expiredAt: LocalDateTime): List<ReservationItemEntity> {
             return reservation.seatIds.map {
                 ReservationItemEntity(
-                    reservationId = reservation.reservationId,
+                    reservationId = reservationId,
                     concertScheduleId = reservation.concertScheduleId,
                     seatId = it,
                     reservationStatus = reservation.reservationStatus,

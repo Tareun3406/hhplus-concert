@@ -36,7 +36,7 @@ class ReservationRepositoryImpl (
 
         val items: List<ReservationItemEntity>
         if (reservation.reservationId == 0L) {
-            items = ReservationItemEntity.createNewReservationItems(reservation, LocalDateTime.now().plusMinutes(concertProperties.expiredMinute))
+            items = ReservationItemEntity.createNewReservationItems(reservation, reservationResult.id, LocalDateTime.now().plusMinutes(concertProperties.expiredMinute))
         } else {
             items = reservationItemJpaRepository.findAllByReservationId(reservation.reservationId)
             items.forEach{ it.reservationStatus = reservation.reservationStatus }

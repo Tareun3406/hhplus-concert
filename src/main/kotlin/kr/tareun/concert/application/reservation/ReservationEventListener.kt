@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
-import org.springframework.transaction.event.TransactionPhase
-import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
 class ReservationEventListener(
@@ -18,8 +16,6 @@ class ReservationEventListener(
 ) {
     private val logger = LoggerFactory.getLogger(ReservationEventListener::class.java)
 
-    @Async // 캐시 저장 로직은 메인 프로세스에 영향을 주지 않음.  // todo 재시도 로직 및 로깅
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @KafkaListener(topics = ["reservation.concert.reserved"], groupId = "reservation.cache.request.producer")
     fun handleIncreaseConcertReserveCount(reservedConcertEvent: ReservedConcertEvent) {
         try{
@@ -29,7 +25,6 @@ class ReservationEventListener(
         }
     }
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @KafkaListener(topics = ["reservation.concert.reserved"], groupId = "reservation.pay.request.producer")
     fun handlePublishPayOrderEvent(reservedConcertEvent: ReservedConcertEvent) {
         try {

@@ -2,6 +2,8 @@ drop database hhplus_concert;
 create database hhplus_concert;
 use hhplus_concert;
 
+use concert;
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
@@ -124,6 +126,22 @@ FROM (
              SELECT n + 1 FROM numbers WHERE n < 10000
          )
          SELECT n FROM numbers
+     ) AS t;
+
+INSERT INTO concert_schedule (concert_id, ticket_price, scheduled_time, location_id, reserved_count)
+SELECT n, 10000, TIMESTAMP('20990201'), n, 0
+FROM (
+         WITH RECURSIVE numbers AS (
+             SELECT 1 AS n
+             UNION ALL
+             SELECT n + 1 FROM numbers WHERE n < 10000
+         ),
+        schedule_numbers AS (
+            SELECT 1 AS schedule_num
+            UNION ALL
+            SELECT schedule_num + 1 FROM schedule_numbers WHERE schedule_num < 10
+        )
+         SELECT n, schedule_num FROM numbers CROSS JOIN schedule_numbers
      ) AS t;
 
 ## 장소 10000 개

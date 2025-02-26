@@ -29,7 +29,7 @@ class RedisLockAop(private val redissonClient: RedissonClient) {
         val multiLock = redissonClient.getMultiLock(*locks)
 
         // 락 획득 대기 10초, 획득후 ttl 초 유지
-        val isLockAcquired = multiLock.tryLock(10, redisLock.ttlSec, java.util.concurrent.TimeUnit.SECONDS)
+        val isLockAcquired = multiLock.tryLock(10000, redisLock.ttlSec, java.util.concurrent.TimeUnit.SECONDS)
         return try {
             if (isLockAcquired) {
                 // 락 획득 성공 시 메서드 실행

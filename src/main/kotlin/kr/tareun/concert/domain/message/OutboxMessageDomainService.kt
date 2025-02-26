@@ -6,6 +6,7 @@ import kr.tareun.concert.common.enums.MessageStatus
 import kr.tareun.concert.common.exception.CommonException
 import kr.tareun.concert.domain.message.model.OutboxMessage
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
@@ -24,7 +25,7 @@ class OutboxMessageDomainService(
         return outboxMessageRepository.saveOutboxMessage(outboxMessage)
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun publishMessageAndUpdateStatus(outboxMessage: OutboxMessage<String>): OutboxMessage<String> {
         when(outboxMessage.brokerType) {
             BrokerType.MOCK -> messagePublisher.publishMock(outboxMessage)
@@ -34,7 +35,7 @@ class OutboxMessageDomainService(
         // 아웃박스 DB 상태 변경
         try {
             outboxMessage.setStatus(MessageStatus.SEND)
-            return outboxMessageRepository.saveOutboxMessage(outboxMessage)
+            return outboxMessageRepository.saveOutboxMessageForString(outboxMessage)
         } catch (e: Exception) {
             throw CommonException(ErrorCode.OUTBOX_MESSAGE_SENT_BUT_STATUS_SAVE_FAILED, e) // 메세지 전송 완료 상태 저장 실패.
         }

@@ -18,6 +18,7 @@ export default function () {
         return;
     }
     const concertList = concertResponse.json();
+    sleep(5);
 
     // 콘서트 선택(스케줄 목록 조회)
     const selectConcert = concertList.item[Math.floor(Math.random() * concertList.item.length)];

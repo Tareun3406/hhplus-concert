@@ -99,6 +99,17 @@ CREATE TABLE seat
     CONSTRAINT pk_seat PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS outbox_message;
+CREATE TABLE outbox_message
+(
+    id          BIGINT AUTO_INCREMENT NOT NULL,
+    topic       VARCHAR(255)          NOT NULL,
+    message     VARCHAR(255)          NOT NULL,
+    broker_type VARCHAR(255)          NOT NULL,
+    status      VARCHAR(255)          NOT NULL,
+    created_at  TIMESTAMP             NOT NULL,
+    CONSTRAINT pk_outbox_message PRIMARY KEY (id)
+);
 
 create index index_seat_location_id on seat (location_id);
 create index index_point_user_id on point (user_id);

@@ -17,7 +17,7 @@ export default function () {
         console.log(`콘서트 목록 조회 오류: ${resConcertList.status} - ${resConcertList.body}`)
         return;
     }
-    const concertList = concertResponse.json();
+    const concertList = resConcertList.json();
     sleep(5);
 
     // 콘서트 선택(스케줄 목록 조회)

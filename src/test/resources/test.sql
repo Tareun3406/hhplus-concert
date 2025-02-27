@@ -18,7 +18,6 @@ CREATE TABLE reservation
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
     user_id      BIGINT                NOT NULL,
-    price_amount INT                   NOT NULL,
     CONSTRAINT pk_reservation PRIMARY KEY (id)
 );
 

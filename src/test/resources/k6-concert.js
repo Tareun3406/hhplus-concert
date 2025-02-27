@@ -2,9 +2,9 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export let options = {
-    vus: 100,
+    vus: 500,
     // Iterations: 1
-    duration: '1m'
+    duration: '5m'
 }
 
 export default function () {
@@ -12,16 +12,31 @@ export default function () {
     const userId = Math.floor(Math.random()* 99999)+1 // 1 ~ 10만
 
     // 콘서트 목록 조회
-    const concertList =  http.get(`${api}/concerts?pageNumber=${Math.floor(Math.random() * 100)}`).json();
+    const resConcertList = http.get(`${api}/concerts?pageNumber=${Math.floor(Math.random() * 100)}`)
+    if (resConcertList.status !== 200) {
+        console.log(`콘서트 목록 조회 오류: ${resConcertList.status} - ${resConcertList.body}`)
+        return;
+    }
+    const concertList = concertResponse.json();
 
     // 콘서트 선택(스케줄 목록 조회)
     const selectConcert = concertList.item[Math.floor(Math.random() * concertList.item.length)];
-    const scheduleList = http.get(`${api}/concerts/${selectConcert.concertId}/schedules`).json().item.filter((schedule) => schedule.canReserve);
+    const resScheduleList = http.get(`${api}/concerts/${selectConcert.concertId}/schedules`);
+    if (resScheduleList.status !== 200) {
+        console.log(`스케줄 목록 조회 오류: ${resScheduleList.status} - ${resScheduleList.body}`)
+        return;
+    }
+    const scheduleList = resScheduleList.json().item.filter((schedule) => schedule.canReserve);
     sleep(5);
 
     // 스케줄 선택(좌석 목록 조회)
     const selectSchedule = scheduleList[Math.floor(Math.random() * scheduleList.length)];
-    const seatList = http.get(`${api}/concerts/${selectSchedule.concertId}/schedules/${selectSchedule.scheduleId}`).json().item.filter((seat) => seat.canReserve);
+    const resSeatList = http.get(`${api}/concerts/${selectSchedule.concertId}/schedules/${selectSchedule.scheduleId}`)
+    if (resSeatList.status !== 200) {
+        console.log(`좌석 목록 조회 오류: ${resSeatList.status} - ${resSeatList.body}`)
+        return;
+    }
+    const seatList = resSeatList.json().item.filter((seat) => seat.canReserve);
     sleep(10);
 
     // 예약 (좌석 선택)
@@ -33,7 +48,10 @@ export default function () {
             selectSeat.seatId
         ]
     }
-    http.post(`${api}/reservation/concerts`, JSON.stringify(reservationBody), {
+    const resReservation = http.post(`${api}/reservation/concerts`, JSON.stringify(reservationBody), {
         headers: { 'Content-Type': 'application/json' },
     });
+    if (resReservation.status !== 200) {
+        console.log(`좌석 예약 오류: ${resReservation.status} - ${resReservation.body}`)
+    }
 }

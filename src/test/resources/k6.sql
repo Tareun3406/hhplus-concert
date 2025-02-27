@@ -1,3 +1,4 @@
+# create database concert;
 use concert;
 SET SESSION max_recursive_iterations = 1000000; -- 100만개
 

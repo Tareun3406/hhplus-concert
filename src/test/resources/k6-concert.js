@@ -2,9 +2,9 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export let options = {
-    vus: 500,
+    vus: 100,
     // Iterations: 1
-    duration: '5m'
+    duration: '1m'
 }
 
 export default function () {
@@ -12,7 +12,7 @@ export default function () {
     const userId = Math.floor(Math.random()* 99999)+1 // 1 ~ 10만
 
     // 콘서트 목록 조회
-    const concertList =  http.get(`${api}/concerts?pageNumber=${i}`).json(Math.floor(Math.random() * 100));
+    const concertList =  http.get(`${api}/concerts?pageNumber=${Math.floor(Math.random() * 100)}`).json();
 
     // 콘서트 선택(스케줄 목록 조회)
     const selectConcert = concertList.item[Math.floor(Math.random() * concertList.item.length)];

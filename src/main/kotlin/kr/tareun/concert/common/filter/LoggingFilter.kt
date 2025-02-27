@@ -29,7 +29,7 @@ class LoggingFilter : Filter {
 
         val requestBody = String(wrappedRequest.contentAsByteArray).replace(Regex("\\s+"), "")
         val responseBody = String(wrappedResponse.contentAsByteArray)
-        logger.info("request: [${wrappedRequest.method}] ${wrappedRequest.requestURI}, Body: '$requestBody'" +
+        logger.debug("request: [${wrappedRequest.method}] ${wrappedRequest.requestURI}, Body: '$requestBody'" +
                 "response: Status=${wrappedResponse.status}, Body='${responseBody}', Duration = ${stopWatch.totalTimeMillis}")
 
         wrappedResponse.copyBodyToResponse()
